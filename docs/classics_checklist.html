@@ -1,0 +1,1878 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>100 Must-Read Classics — Penguin Reading Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208;
+    --paper: #f5f0e8;
+    --cream: #ede8d8;
+    --aged: #d4c9a8;
+    --orange: #d4521a;
+    --orange-pale: #f0ddd4;
+    --teal: #1a5c5a;
+    --teal-light: #d0e8e6;
+    --gold: #b8860b;
+    --gold-light: #f5e8c0;
+    --muted: #7a6e58;
+    --border: #c8bfa8;
+    --shadow: rgba(26,18,8,0.15);
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'Lora', Georgia, serif;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(200,191,168,0.25) 27px, rgba(200,191,168,0.25) 28px),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c8bfa8' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  /* ======== HEADER ======== */
+  .site-header {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+  .header-stripe {
+    background: var(--orange);
+    height: 6px;
+  }
+  .header-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 36px 24px 28px;
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .header-title h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 900;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+  }
+  .header-title h1 em {
+    font-style: italic;
+    color: var(--orange);
+  }
+  .header-title p {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.75rem;
+    color: var(--aged);
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    margin-top: 8px;
+  }
+  .penguin-logo {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+  }
+  .penguin-svg { width: 44px; opacity: 0.85; }
+  .penguin-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    color: var(--aged);
+    text-transform: uppercase;
+  }
+
+  /* ======== SCORE PANEL ======== */
+  .score-panel {
+    background: var(--ink);
+    color: var(--paper);
+    border-top: 3px solid var(--orange);
+  }
+  .score-inner {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 24px;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 24px;
+    align-items: center;
+  }
+  .score-nums {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .score-col { text-align: center; }
+  .score-divider {
+    width: 1px;
+    height: 40px;
+    background: rgba(255,255,255,0.15);
+  }
+  .score-big {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.6rem;
+    font-weight: 900;
+    line-height: 1;
+    color: var(--orange);
+  }
+  .score-big.score-diff { color: var(--gold); }
+  .score-big span {
+    font-size: 1.1rem;
+    color: var(--aged);
+    font-weight: 400;
+  }
+  .score-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--aged);
+    margin-top: 3px;
+  }
+  .progress-section { flex: 1; }
+  .progress-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 7px;
+  }
+  .progress-row-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--aged);
+    min-width: 34px;
+  }
+  .progress-bar-wrap {
+    flex: 1;
+    background: rgba(255,255,255,0.1);
+    border-radius: 2px;
+    height: 7px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--orange), #e8823a);
+    border-radius: 2px;
+    transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
+    width: 0%;
+  }
+  .diff-fill {
+    background: linear-gradient(90deg, var(--gold), #d4a820) !important;
+  }
+  .progress-row-pct {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.62rem;
+    color: var(--aged);
+    min-width: 30px;
+    text-align: right;
+  }
+  .progress-text {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.68rem;
+    color: var(--aged);
+    letter-spacing: 0.06em;
+    margin-top: 4px;
+  }
+  .profile-badge {
+    background: var(--orange);
+    color: white;
+    padding: 8px 14px;
+    border-radius: 2px;
+    text-align: center;
+    min-width: 120px;
+  }
+  .profile-badge .badge-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 0.85rem;
+    font-weight: 700;
+    font-style: italic;
+    line-height: 1.2;
+  }
+  .profile-badge .badge-sub {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0.85;
+    margin-top: 2px;
+  }
+
+  /* ======== TABS ======== */
+  .tabs-wrap {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px 24px 0;
+    display: flex;
+    gap: 4px;
+    border-bottom: 2px solid var(--border);
+  }
+  .tab-btn {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.72rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 8px 18px 10px;
+    border: none;
+    background: transparent;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+  }
+  .tab-btn:hover { color: var(--ink); }
+  .tab-btn.active {
+    color: var(--orange);
+    border-bottom-color: var(--orange);
+    font-weight: 700;
+  }
+
+  /* ======== MAIN LAYOUT ======== */
+  .main {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 24px 24px 60px;
+  }
+
+  /* ======== SEARCH + FILTERS ======== */
+  .controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .search-wrap {
+    position: relative;
+    flex: 1;
+    min-width: 200px;
+  }
+  .search-input {
+    width: 100%;
+    padding: 9px 14px 9px 36px;
+    border: 1.5px solid var(--border);
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Lora', serif;
+    font-size: 0.88rem;
+    outline: none;
+    border-radius: 2px;
+    transition: border-color 0.2s;
+  }
+  .search-input:focus { border-color: var(--orange); }
+  .search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--muted);
+    font-size: 0.85rem;
+    pointer-events: none;
+  }
+  .filter-btn {
+    padding: 9px 14px;
+    border: 1.5px solid var(--border);
+    background: var(--cream);
+    color: var(--muted);
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.2s;
+    white-space: nowrap;
+  }
+  .filter-btn:hover, .filter-btn.active {
+    background: var(--orange);
+    color: white;
+    border-color: var(--orange);
+  }
+
+  /* ======== BOOK LIST ======== */
+  .book-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    border: 1.5px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .book-item {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 12px 16px;
+    background: var(--cream);
+    border-bottom: 1px solid var(--border);
+    cursor: pointer;
+    transition: background 0.15s;
+    user-select: none;
+    position: relative;
+  }
+  .book-item:last-child { border-bottom: none; }
+  .book-item:hover { background: #ede5cc; }
+  .book-item.checked {
+    background: var(--teal-light);
+  }
+  .book-item.checked:hover { background: #c2dedd; }
+
+  .book-num {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.7rem;
+    color: var(--muted);
+    min-width: 26px;
+    text-align: right;
+    flex-shrink: 0;
+  }
+  .book-checkbox {
+    width: 20px;
+    height: 20px;
+    border: 2px solid var(--border);
+    border-radius: 2px;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.15s;
+    background: white;
+  }
+  .book-item.checked .book-checkbox {
+    background: var(--teal);
+    border-color: var(--teal);
+  }
+  .book-checkbox svg { display: none; }
+  .book-item.checked .book-checkbox svg { display: block; }
+
+  .book-info { flex: 1; min-width: 0; }
+  .book-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 0.95rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--ink);
+  }
+  .book-item.checked .book-title {
+    text-decoration: line-through;
+    color: var(--teal);
+    text-decoration-color: var(--teal);
+  }
+  .book-meta {
+    font-family: 'Lora', serif;
+    font-size: 0.75rem;
+    color: var(--muted);
+    font-style: italic;
+    margin-top: 1px;
+  }
+
+  .genre-tag {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.6rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 7px;
+    border-radius: 1px;
+    flex-shrink: 0;
+  }
+
+  /* ======== ROADMAP TAB ======== */
+  .roadmap-section { display: none; }
+  .roadmap-section.active { display: block; }
+  .checklist-section.active { display: block; }
+  .checklist-section { display: none; }
+
+  .roadmap-intro {
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    border-left: 4px solid var(--orange);
+    padding: 16px 18px;
+    margin-bottom: 24px;
+    font-style: italic;
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+
+  .roadmap-tier {
+    margin-bottom: 28px;
+  }
+  .tier-header {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 12px;
+  }
+  .tier-num {
+    background: var(--orange);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+  .tier-title {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.1rem;
+    font-weight: 700;
+  }
+  .tier-desc {
+    font-family: 'Lora', serif;
+    font-size: 0.78rem;
+    color: var(--muted);
+    font-style: italic;
+  }
+  .tier-books {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 8px;
+    padding-left: 44px;
+  }
+  .roadmap-book {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 10px 12px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    position: relative;
+  }
+  .roadmap-book:hover { border-color: var(--orange); background: var(--orange-pale); }
+  .roadmap-book.done {
+    opacity: 0.5;
+    background: var(--teal-light);
+    border-color: var(--teal);
+  }
+  .roadmap-book .rb-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--ink);
+  }
+  .roadmap-book .rb-author {
+    font-style: italic;
+    color: var(--muted);
+    margin-top: 2px;
+    font-size: 0.72rem;
+  }
+  .roadmap-book .rb-done-badge {
+    position: absolute;
+    top: 6px;
+    right: 6px;
+    background: var(--teal);
+    color: white;
+    font-size: 0.55rem;
+    padding: 2px 5px;
+    letter-spacing: 0.08em;
+    font-family: 'Courier Prime', monospace;
+    text-transform: uppercase;
+    border-radius: 1px;
+    display: none;
+  }
+  .roadmap-book.done .rb-done-badge { display: block; }
+
+  /* ======== PROFILE TAB ======== */
+  .profile-section { display: none; }
+  .profile-section.active { display: block; }
+
+  .profile-card {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 28px 28px 24px;
+    margin-bottom: 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  .profile-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle at top right, var(--orange) 0%, transparent 70%);
+    opacity: 0.15;
+    pointer-events: none;
+  }
+  .profile-eyebrow {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.65rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--orange);
+    margin-bottom: 6px;
+  }
+  .profile-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2.2rem;
+    font-weight: 900;
+    font-style: italic;
+    line-height: 1.1;
+    margin-bottom: 8px;
+  }
+  .profile-desc {
+    font-family: 'Lora', serif;
+    font-size: 0.9rem;
+    color: var(--aged);
+    line-height: 1.7;
+    max-width: 500px;
+  }
+
+  .profile-stats {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 12px;
+    margin-bottom: 24px;
+  }
+  .stat-box {
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    padding: 14px;
+    text-align: center;
+  }
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1rem, 2.5vw, 2rem);
+    font-weight: 900;
+    color: var(--orange);
+    line-height: 1;
+    text-align: center;
+    word-break: break-word;
+    hyphens: auto;
+  }
+  .stat-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.62rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-top: 4px;
+  }
+
+  .genres-breakdown {
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    padding: 20px;
+    margin-bottom: 24px;
+  }
+  .genres-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .genre-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 8px;
+  }
+  .genre-name {
+    font-family: 'Lora', serif;
+    font-size: 0.8rem;
+    min-width: 130px;
+    font-style: italic;
+  }
+  .genre-bar-wrap {
+    flex: 1;
+    background: var(--border);
+    height: 6px;
+    border-radius: 1px;
+    overflow: hidden;
+  }
+  .genre-bar { height: 100%; border-radius: 1px; transition: width 0.5s ease; }
+  .genre-count {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.68rem;
+    color: var(--muted);
+    min-width: 40px;
+    text-align: right;
+  }
+
+  .empty-state {
+    text-align: center;
+    padding: 60px 20px;
+    color: var(--muted);
+  }
+  .empty-state .es-icon {
+    font-size: 3rem;
+    margin-bottom: 12px;
+    opacity: 0.4;
+  }
+  .empty-state p {
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.9rem;
+  }
+
+  .tab-content { display: none; }
+  .tab-content.active { display: block; }
+
+  .profile-all-link {
+    display: inline-block;
+    margin-top: 14px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.68rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--orange);
+    text-decoration: none;
+    border-bottom: 1px solid var(--orange);
+    padding-bottom: 1px;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+  }
+  .profile-all-link:hover { opacity: 1; }
+
+  /* ======== DIFFICULTY PIP ======== */
+  .diff-pip {
+    display: flex;
+    align-items: center;
+    gap: 3px;
+    flex-shrink: 0;
+    position: relative;
+    opacity: 0;
+    transition: opacity 0.15s;
+    cursor: help;
+  }
+  .book-item:hover .diff-pip { opacity: 1; }
+  .diff-dot {
+    width: 6px; height: 6px;
+    border-radius: 50%;
+    background: var(--border);
+    display: inline-block;
+  }
+  .diff-pip-label {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-left: 5px;
+    white-space: nowrap;
+  }
+  .diff-tooltip {
+    position: fixed;
+    width: 240px;
+    background: var(--ink);
+    color: var(--aged);
+    font-family: 'Lora', serif;
+    font-size: 0.75rem;
+    font-style: italic;
+    line-height: 1.6;
+    padding: 10px 12px;
+    border-radius: 2px;
+    border-left: 3px solid var(--orange);
+    box-shadow: 0 4px 16px rgba(26,18,8,0.25);
+    z-index: 9999;
+    pointer-events: none;
+    display: none;
+  }
+
+  /* ======== RECOMMENDATION GROUPS ======== */
+  .rec-group-header {
+    display: flex;
+    gap: 14px;
+    align-items: flex-start;
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+    padding: 16px 18px;
+    border-radius: 2px;
+  }
+  .rec-group-icon {
+    font-size: 1.4rem;
+    line-height: 1;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .rec-group-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+  .rec-group-why {
+    font-family: 'Lora', serif;
+    font-size: 0.8rem;
+    font-style: italic;
+    color: var(--muted);
+    line-height: 1.65;
+  }
+  .rec-highlight {
+    border: 2px solid var(--orange) !important;
+    background: var(--orange-pale) !important;
+    position: relative;
+  }
+  .rec-start-badge {
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    background: var(--orange);
+    color: white;
+    padding: 2px 7px;
+    border-radius: 1px;
+    margin-bottom: 5px;
+    display: inline-block;
+  }
+  .rb-diff {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    font-family: 'Courier Prime', monospace;
+    font-size: 0.58rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    margin-top: 4px;
+  }
+
+  /* ======== RESPONSIVE ======== */
+  @media (max-width: 600px) {
+    .score-inner { grid-template-columns: auto 1fr; }
+    .profile-badge { display: none; }
+    .tier-books { padding-left: 0; }
+    .header-inner { padding: 24px 16px 20px; }
+    .main { padding: 16px 16px 40px; }
+  }
+
+  /* ======== ANIMATIONS ======== */
+  @keyframes checkPop {
+    0% { transform: scale(1); }
+    40% { transform: scale(1.15); }
+    100% { transform: scale(1); }
+  }
+  .book-item.just-checked { animation: checkPop 0.25s ease; }
+
+  .no-results {
+    text-align: center;
+    padding: 40px;
+    color: var(--muted);
+    font-style: italic;
+    font-size: 0.9rem;
+    background: var(--cream);
+    border: 1.5px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-stripe"></div>
+  <div class="header-inner">
+    <div class="header-title">
+      <h1>100 Must-Read <em>Classics</em></h1>
+      <p>As chosen by Penguin readers · Your personal tracker</p>
+    </div>
+    <div class="penguin-logo">
+      <svg class="penguin-svg" viewBox="0 0 80 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <ellipse cx="40" cy="55" rx="28" ry="40" fill="white"/>
+        <ellipse cx="40" cy="55" rx="28" ry="40" fill="none" stroke="white" stroke-width="2"/>
+        <ellipse cx="40" cy="60" rx="16" ry="28" fill="#f5f0e8"/>
+        <circle cx="40" cy="25" r="18" fill="white"/>
+        <ellipse cx="33" cy="22" rx="4" ry="5" fill="#1a1208"/>
+        <ellipse cx="47" cy="22" rx="4" ry="5" fill="#1a1208"/>
+        <circle cx="34.5" cy="21" r="1.5" fill="white"/>
+        <circle cx="48.5" cy="21" r="1.5" fill="white"/>
+        <ellipse cx="40" cy="30" rx="5" ry="3" fill="#d4521a"/>
+        <ellipse cx="16" cy="60" rx="8" ry="5" fill="white" transform="rotate(-20 16 60)"/>
+        <ellipse cx="64" cy="60" rx="8" ry="5" fill="white" transform="rotate(20 64 60)"/>
+        <ellipse cx="32" cy="92" rx="10" ry="4" fill="#d4521a" transform="rotate(10 32 92)"/>
+        <ellipse cx="48" cy="92" rx="10" ry="4" fill="#d4521a" transform="rotate(-10 48 92)"/>
+      </svg>
+      <span class="penguin-label">Penguin Books</span>
+    </div>
+  </div>
+</header>
+
+<div class="score-panel">
+  <div class="score-inner">
+    <div class="score-nums">
+      <div class="score-col">
+        <div class="score-big"><span id="score-num">0</span><span>/102</span></div>
+        <div class="score-label">Books read</div>
+      </div>
+      <div class="score-divider"></div>
+      <div class="score-col">
+        <div class="score-big score-diff"><span id="diff-num">0</span><span>/180</span></div>
+        <div class="score-label">Difficulty score</div>
+      </div>
+    </div>
+    <div class="progress-section">
+      <div class="progress-row">
+        <div class="progress-row-label">Read</div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill" id="progress-fill"></div>
+        </div>
+        <div class="progress-row-pct" id="progress-pct">0%</div>
+      </div>
+      <div class="progress-row">
+        <div class="progress-row-label">Depth</div>
+        <div class="progress-bar-wrap">
+          <div class="progress-bar-fill diff-fill" id="diff-fill"></div>
+        </div>
+        <div class="progress-row-pct" id="diff-pct">0%</div>
+      </div>
+      <div class="progress-text" id="progress-text">Start checking off books below</div>
+    </div>
+    <div class="profile-badge" id="profile-badge">
+      <div class="badge-title" id="badge-title">Novice Reader</div>
+      <div class="badge-sub">Reader Profile</div>
+    </div>
+  </div>
+</div>
+
+<div class="tabs-wrap">
+  <button class="tab-btn active" data-tab="checklist">✓ Checklist</button>
+  <button class="tab-btn" data-tab="profile">◈ My Profile</button>
+  <button class="tab-btn" data-tab="roadmap">→ Reading Roadmap</button>
+</div>
+
+<main class="main">
+
+  <!-- CHECKLIST TAB -->
+  <div class="tab-content active" id="tab-checklist">
+    <div class="controls">
+      <div class="search-wrap">
+        <span class="search-icon">⌕</span>
+        <input type="text" class="search-input" id="search-input" placeholder="Search by title, author or genre…">
+      </div>
+      <button class="filter-btn active" data-filter="all">All (102)</button>
+      <button class="filter-btn" data-filter="unread">Unread</button>
+      <button class="filter-btn" data-filter="read">Read</button>
+    </div>
+    <div class="book-list" id="book-list"></div>
+    <div class="no-results" id="no-results" style="display:none">No books match your search.</div>
+  </div>
+
+  <!-- PROFILE TAB -->
+  <div class="tab-content" id="tab-profile">
+    <div id="profile-empty" class="empty-state">
+      <div class="es-icon">📚</div>
+      <p>Check off some books in the Checklist tab to see your reader profile.</p>
+    </div>
+    <div id="profile-content" style="display:none">
+      <div class="profile-card">
+        <div class="profile-eyebrow">Your Reader Profile</div>
+        <div class="profile-name" id="profile-big-name">The Curious Wanderer</div>
+        <div class="profile-desc" id="profile-big-desc">Loading…</div>
+        <a href="reader_profiles.html" class="profile-all-link">View all reader profiles →</a>
+      </div>
+      <div class="profile-stats">
+        <div class="stat-box">
+          <div class="stat-num" id="stat-read">0</div>
+          <div class="stat-label">Books Read</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="stat-pct">0%</div>
+          <div class="stat-label">Complete</div>
+        </div>
+        <div class="stat-box" style="border-top: 3px solid var(--gold);">
+          <div class="stat-num" style="color:var(--gold)" id="stat-diffscore">0</div>
+          <div class="stat-label">Difficulty Score</div>
+        </div>
+        <div class="stat-box" style="border-top: 3px solid var(--gold);">
+          <div class="stat-num" style="color:var(--gold)" id="stat-avgdiff">—</div>
+          <div class="stat-label">Avg Difficulty</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="stat-century">—</div>
+          <div class="stat-label">Fav. Era</div>
+        </div>
+        <div class="stat-box">
+          <div class="stat-num" id="stat-streak">—</div>
+          <div class="stat-label">Top Genre</div>
+        </div>
+      </div>
+      <div class="genres-breakdown">
+        <div class="genres-title">📊 Genre Breakdown</div>
+        <div id="genre-bars"></div>
+      </div>
+      <div class="genres-breakdown">
+        <div class="genres-title">⚖ Difficulty Breakdown</div>
+        <div id="diff-bars"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ROADMAP TAB -->
+  <div class="tab-content" id="tab-roadmap">
+    <div class="roadmap-intro" id="roadmap-intro">
+      Check off books you've read in the Checklist tab, and your personalised reading roadmap will appear here — sorted by what to tackle next.
+    </div>
+    <div id="roadmap-tiers"></div>
+  </div>
+
+</main>
+
+<script>
+const BOOKS = [
+  {id:1, title:"Pride and Prejudice", author:"Jane Austen", year:1813, genre:"Romance", era:"19th Century", diff:1},
+  {id:2, title:"To Kill a Mockingbird", author:"Harper Lee", year:1960, genre:"Social Drama", era:"20th Century", diff:1},
+  {id:3, title:"The Great Gatsby", author:"F. Scott Fitzgerald", year:1925, genre:"American Drama", era:"20th Century", diff:1},
+  {id:4, title:"One Hundred Years of Solitude", author:"Gabriel García Márquez", year:1967, genre:"Magical Realism", era:"20th Century", diff:2},
+  {id:5, title:"In Cold Blood", author:"Truman Capote", year:1965, genre:"True Crime / Non-fiction", era:"20th Century", diff:1},
+  {id:6, title:"Wide Sargasso Sea", author:"Jean Rhys", year:1966, genre:"Post-colonial", era:"20th Century", diff:2},
+  {id:7, title:"Brave New World", author:"Aldous Huxley", year:1932, genre:"Dystopia", era:"20th Century", diff:2},
+  {id:8, title:"I Capture the Castle", author:"Dodie Smith", year:1948, genre:"Coming of Age", era:"20th Century", diff:1},
+  {id:9, title:"Jane Eyre", author:"Charlotte Brontë", year:1847, genre:"Gothic Romance", era:"19th Century", diff:1},
+  {id:10, title:"Crime and Punishment", author:"Fyodor Dostoevsky", year:1866, genre:"Psychological", era:"19th Century", diff:3},
+  {id:11, title:"The Secret History", author:"Donna Tartt", year:1992, genre:"Dark Academia", era:"20th Century", diff:1},
+  {id:12, title:"The Call of the Wild", author:"Jack London", year:1903, genre:"Adventure", era:"20th Century", diff:1},
+  {id:13, title:"Persuasion", author:"Jane Austen", year:1818, genre:"Romance", era:"19th Century", diff:1},
+  {id:14, title:"Les Misérables", author:"Victor Hugo", year:1862, genre:"Epic Drama", era:"19th Century", diff:3},
+  {id:15, title:"Moby-Dick", author:"Herman Melville", year:1851, genre:"Epic Adventure", era:"19th Century", diff:3},
+  {id:16, title:"To the Lighthouse", author:"Virginia Woolf", year:1927, genre:"Modernist", era:"20th Century", diff:3},
+  {id:17, title:"The Death of the Heart", author:"Elizabeth Bowen", year:1938, genre:"Psychological", era:"20th Century", diff:2},
+  {id:18, title:"Frankenstein", author:"Mary Shelley", year:1823, genre:"Gothic / Sci-Fi", era:"19th Century", diff:2},
+  {id:19, title:"The Master and Margarita", author:"Mikhail Bulgakov", year:1966, genre:"Magical Realism", era:"20th Century", diff:2},
+  {id:20, title:"The Go-Between", author:"L. P. Hartley", year:1953, genre:"Social Drama", era:"20th Century", diff:2},
+  {id:21, title:"The Iliad", author:"Homer", year:-750, genre:"Epic Poetry", era:"Ancient", diff:3},
+  {id:22, title:"One Flew Over the Cuckoo's Nest", author:"Ken Kesey", year:1962, genre:"Social Drama", era:"20th Century", diff:1},
+  {id:23, title:"Nineteen Eighty-Four", author:"George Orwell", year:1949, genre:"Dystopia", era:"20th Century", diff:1},
+  {id:24, title:"The Catcher in the Rye", author:"J. D. Salinger", year:1951, genre:"Coming of Age", era:"20th Century", diff:1},
+  {id:25, title:"Beloved", author:"Toni Morrison", year:1987, genre:"Historical", era:"20th Century", diff:2},
+  {id:26, title:"The Code of the Woosters", author:"P. G. Wodehouse", year:1938, genre:"Comedy", era:"20th Century", diff:1},
+  {id:27, title:"Dracula", author:"Bram Stoker", year:1897, genre:"Gothic Horror", era:"19th Century", diff:1},
+  {id:28, title:"The Outsiders", author:"S. E. Hinton", year:1967, genre:"Coming of Age", era:"20th Century", diff:1},
+  {id:29, title:"The Chrysalids", author:"John Wyndham", year:1955, genre:"Dystopia", era:"20th Century", diff:1},
+  {id:30, title:"War and Peace", author:"Leo Tolstoy", year:1867, genre:"Epic Drama", era:"19th Century", diff:3},
+  {id:31, title:"Great Expectations", author:"Charles Dickens", year:1860, genre:"Victorian Drama", era:"19th Century", diff:2},
+  {id:32, title:"Another Country", author:"James Baldwin", year:1962, genre:"Social Drama", era:"20th Century", diff:2},
+  {id:33, title:"Catch-22", author:"Joseph Heller", year:1961, genre:"Satire", era:"20th Century", diff:2},
+  {id:34, title:"The Age of Innocence", author:"Edith Wharton", year:1920, genre:"Romance", era:"20th Century", diff:2},
+  {id:35, title:"Things Fall Apart", author:"Chinua Achebe", year:1958, genre:"Post-colonial", era:"20th Century", diff:1},
+  {id:36, title:"Middlemarch", author:"George Eliot", year:1871, genre:"Victorian Drama", era:"19th Century", diff:3},
+  {id:37, title:"Rebecca", author:"Daphne du Maurier", year:1938, genre:"Gothic Romance", era:"20th Century", diff:1},
+  {id:38, title:"Tess of the d'Urbervilles", author:"Thomas Hardy", year:1891, genre:"Victorian Drama", era:"19th Century", diff:2},
+  {id:39, title:"Vanity Fair", author:"William Makepeace Thackeray", year:1847, genre:"Victorian Drama", era:"19th Century", diff:2},
+  {id:40, title:"Brideshead Revisited", author:"Evelyn Waugh", year:1945, genre:"Social Drama", era:"20th Century", diff:2},
+  {id:41, title:"Madame Bovary", author:"Gustave Flaubert", year:1857, genre:"Psychological", era:"19th Century", diff:2},
+  {id:42, title:"The Mill on the Floss", author:"George Eliot", year:1860, genre:"Victorian Drama", era:"19th Century", diff:2},
+  {id:43, title:"Barchester Towers", author:"Anthony Trollope", year:1857, genre:"Victorian Drama", era:"19th Century", diff:2},
+  {id:44, title:"Lady Chatterley's Lover", author:"D. H. Lawrence", year:1928, genre:"Romance", era:"20th Century", diff:2},
+  {id:45, title:"The Count of Monte Cristo", author:"Alexandre Dumas", year:1844, genre:"Adventure", era:"19th Century", diff:2},
+  {id:46, title:"The Grapes of Wrath", author:"John Steinbeck", year:1939, genre:"Social Drama", era:"20th Century", diff:2},
+  {id:47, title:"Ulysses", author:"James Joyce", year:1922, genre:"Modernist", era:"20th Century", diff:4},
+  {id:48, title:"East of Eden", author:"John Steinbeck", year:1952, genre:"Epic Drama", era:"20th Century", diff:2},
+  {id:49, title:"The Lord of the Rings", author:"J. R. R. Tolkien", year:1954, genre:"Fantasy", era:"20th Century", diff:1},
+  {id:50, title:"The Brothers Karamazov", author:"Fyodor Dostoyevsky", year:1880, genre:"Philosophical", era:"19th Century", diff:3},
+  {id:51, title:"Buddenbrooks", author:"Thomas Mann", year:1901, genre:"Epic Drama", era:"20th Century", diff:3},
+  {id:52, title:"Lolita", author:"Vladimir Nabokov", year:1955, genre:"Psychological", era:"20th Century", diff:3},
+  {id:53, title:"The Secret Garden", author:"Frances Hodgson Burnett", year:1911, genre:"Coming of Age", era:"20th Century", diff:1},
+  {id:54, title:"Scoop", author:"Evelyn Waugh", year:1938, genre:"Satire", era:"20th Century", diff:1},
+  {id:55, title:"Love in a Cold Climate", author:"Nancy Mitford", year:1949, genre:"Comedy", era:"20th Century", diff:1},
+  {id:56, title:"A Tale of Two Cities", author:"Charles Dickens", year:1859, genre:"Historical", era:"19th Century", diff:2},
+  {id:57, title:"Diary of a Nobody", author:"George & Weedon Grossmith", year:1892, genre:"Comedy", era:"19th Century", diff:1},
+  {id:58, title:"Anna Karenina", author:"Leo Tolstoy", year:1878, genre:"Psychological", era:"19th Century", diff:2},
+  {id:59, title:"The Betrothed", author:"Alessandro Manzoni", year:1827, genre:"Historical", era:"19th Century", diff:2},
+  {id:60, title:"Orlando", author:"Virginia Woolf", year:1928, genre:"Modernist", era:"20th Century", diff:2},
+  {id:61, title:"Atlas Shrugged", author:"Ayn Rand", year:1957, genre:"Philosophical", era:"20th Century", diff:2},
+  {id:62, title:"The Time Machine", author:"H. G. Wells", year:1895, genre:"Science Fiction", era:"19th Century", diff:1},
+  {id:63, title:"The Art of War", author:"Sun-Tzu", year:-500, genre:"Philosophy", era:"Ancient", diff:1},
+  {id:64, title:"The Forsyte Saga", author:"John Galsworthy", year:1922, genre:"Epic Drama", era:"20th Century", diff:2},
+  {id:65, title:"Travels with Charley", author:"John Steinbeck", year:1962, genre:"Travel / Non-fiction", era:"20th Century", diff:1},
+  {id:66, title:"Tropic of Cancer", author:"Henry Miller", year:1934, genre:"Modernist", era:"20th Century", diff:2},
+  {id:67, title:"Don Quixote", author:"Miguel de Cervantes", year:1605, genre:"Adventure", era:"Pre-19th Century", diff:3},
+  {id:68, title:"Staying On", author:"Paul Scott", year:1977, genre:"Post-colonial", era:"20th Century", diff:2},
+  {id:69, title:"The Wind in the Willows", author:"Kenneth Grahame", year:1908, genre:"Coming of Age", era:"20th Century", diff:1},
+  {id:70, title:"The Quiet American", author:"Graham Greene", year:1955, genre:"Political", era:"20th Century", diff:2},
+  {id:71, title:"Wuthering Heights", author:"Emily Brontë", year:1847, genre:"Gothic Romance", era:"19th Century", diff:2},
+  {id:72, title:"Perfume", author:"Patrick Süskind", year:1985, genre:"Gothic Horror", era:"20th Century", diff:2},
+  {id:73, title:"The Adventures of Huckleberry Finn", author:"Mark Twain", year:1884, genre:"Adventure", era:"19th Century", diff:1},
+  {id:74, title:"Of Human Bondage", author:"Somerset Maugham", year:1915, genre:"Psychological", era:"20th Century", diff:2},
+  {id:75, title:"Bleak House", author:"Charles Dickens", year:1853, genre:"Victorian Drama", era:"19th Century", diff:3},
+  {id:76, title:"Sense and Sensibility", author:"Jane Austen", year:1811, genre:"Romance", era:"19th Century", diff:1},
+  {id:77, title:"The Picture of Dorian Gray", author:"Oscar Wilde", year:1891, genre:"Gothic Romance", era:"19th Century", diff:1},
+  {id:78, title:"A Christmas Carol", author:"Charles Dickens", year:1843, genre:"Victorian Drama", era:"19th Century", diff:1},
+  {id:79, title:"Silas Marner", author:"George Eliot", year:1861, genre:"Victorian Drama", era:"19th Century", diff:2},
+  {id:80, title:"Mrs Dalloway", author:"Virginia Woolf", year:1925, genre:"Modernist", era:"20th Century", diff:3},
+  {id:81, title:"Little Women", author:"Louisa May Alcott", year:1868, genre:"Coming of Age", era:"19th Century", diff:1},
+  {id:82, title:"The Sea, The Sea", author:"Iris Murdoch", year:1978, genre:"Psychological", era:"20th Century", diff:2},
+  {id:83, title:"David Copperfield", author:"Charles Dickens", year:1849, genre:"Victorian Drama", era:"19th Century", diff:2},
+  {id:84, title:"The Castle", author:"Franz Kafka", year:1926, genre:"Philosophical", era:"20th Century", diff:3},
+  {id:85, title:"I, Claudius", author:"Robert Graves", year:1934, genre:"Historical", era:"20th Century", diff:2},
+  {id:86, title:"I Know Why the Caged Bird Sings", author:"Maya Angelou", year:1969, genre:"Memoir / Non-fiction", era:"20th Century", diff:1},
+  {id:87, title:"A Confederacy of Dunces", author:"John Kennedy Toole", year:1980, genre:"Comedy", era:"20th Century", diff:1},
+  {id:88, title:"The Razor's Edge", author:"W. Somerset Maugham", year:1944, genre:"Philosophical", era:"20th Century", diff:2},
+  {id:89, title:"Lark Rise to Candleford", author:"Flora Thompson", year:1939, genre:"Memoir / Non-fiction", era:"20th Century", diff:1},
+  {id:90, title:"The Return of the Native", author:"Thomas Hardy", year:1878, genre:"Victorian Drama", era:"19th Century", diff:2},
+  {id:91, title:"A Portrait of the Artist as a Young Man", author:"James Joyce", year:1916, genre:"Modernist", era:"20th Century", diff:3},
+  {id:92, title:"Heart of Darkness", author:"Joseph Conrad", year:1902, genre:"Post-colonial", era:"20th Century", diff:3},
+  {id:93, title:"North and South", author:"Elizabeth Gaskell", year:1854, genre:"Victorian Drama", era:"19th Century", diff:2},
+  {id:94, title:"The Handmaid's Tale", author:"Margaret Atwood", year:1985, genre:"Dystopia", era:"20th Century", diff:1},
+  {id:95, title:"Giovanni's Room", author:"James Baldwin", year:1956, genre:"Social Drama", era:"20th Century", diff:2},
+  {id:96, title:"The Godfather", author:"Mario Puzo", year:1969, genre:"Crime", era:"20th Century", diff:1},
+  {id:97, title:"The Woman in White", author:"Wilkie Collins", year:1860, genre:"Gothic Romance", era:"19th Century", diff:2},
+  {id:98, title:"One Day in the Life of Ivan Denisovich", author:"Alexander Solzhenitsyn", year:1962, genre:"Historical", era:"20th Century", diff:2},
+  {id:99, title:"White Nights", author:"Fyodor Dostoyevsky", year:1848, genre:"Psychological", era:"19th Century", diff:1},
+  {id:100, title:"Hard Times", author:"Charles Dickens", year:1854, genre:"Victorian Drama", era:"19th Century", diff:2},
+  {id:101, title:"Gone with the Wind", author:"Margaret Mitchell", year:1936, genre:"Historical", era:"20th Century", diff:2},
+  {id:102, title:"In Search of Lost Time", author:"Marcel Proust", year:1913, genre:"Modernist", era:"20th Century", diff:4},
+];
+
+const GENRE_COLORS = {
+  "Romance": "#d4521a",
+  "Gothic Romance": "#8b3a62",
+  "Social Drama": "#1a5c5a",
+  "Dystopia": "#4a3060",
+  "Coming of Age": "#2e7d32",
+  "Victorian Drama": "#8d5524",
+  "Psychological": "#5c4b8a",
+  "Modernist": "#1565c0",
+  "Adventure": "#e65100",
+  "Comedy": "#f9a825",
+  "Epic Drama": "#c62828",
+  "Historical": "#37474f",
+  "Magical Realism": "#6a1b9a",
+  "Post-colonial": "#2e7d32",
+  "Philosophical": "#4e342e",
+  "Science Fiction": "#00695c",
+  "Satire": "#f57f17",
+  "Dark Academia": "#212121",
+  "Fantasy": "#1a237e",
+  "True Crime / Non-fiction": "#3e2723",
+  "Memoir / Non-fiction": "#4e342e",
+  "Travel / Non-fiction": "#01579b",
+  "Gothic Horror": "#311b92",
+  "Epic Poetry": "#880e4f",
+  "Philosophy": "#33691e",
+  "Epic Adventure": "#bf360c",
+  "American Drama": "#1b5e20",
+  "Political": "#0d47a1",
+  "Crime": "#b71c1c",
+};
+
+// ---- DIFFICULTY BLURBS ----
+const DIFF_BLURBS = {
+  1:  "Austen's prose is elegant but never opaque. The wit and irony reward attention, but the story carries you even without it.",
+  2:  "Morally urgent and emotionally direct. Lee's courtroom drama is accessible at any age, which is precisely why it endures.",
+  3:  "Deceptively short. Fitzgerald's symbolism (the green light, the eyes of Eckleburg) is layered — easy to read, harder to fully grasp.",
+  4:  "The multigenerational scope and magical realism require patience, but Marquez's storytelling instinct pulls you through.",
+  5:  "Capote's prose is clean and journalistic. The difficulty is emotional, not technical — it stays with you long after.",
+  6:  "Short but dense. Rhys assumes you know Jane Eyre, and the fractured, unreliable perspective demands active reading.",
+  7:  "Huxley's dystopia is conceptually rich but written for a general audience. The ideas are challenging; the prose is not.",
+  8:  "Warm and diary-like. Smith's voice is immediate and funny — one of the most readable books on the list.",
+  9:  "Charlotte Bronte's first-person voice is urgent and gripping. Gothic atmosphere but never obscure.",
+  10: "Dostoevsky pulls you through with relentless psychological tension, but the philosophical tangents demand concentration.",
+  11: "Tartt's dark academia thriller reads fast despite its length. Literary but propulsive.",
+  12: "London writes with drive and clarity. A short, powerful novel that asks nothing difficult of the reader.",
+  13: "Austen's last completed novel is warmer and more melancholy than her others — emotionally complex, stylistically straightforward.",
+  14: "Extraordinary in ambition and length. Hugo's philosophical and historical digressions can slow you down, but the emotional core is gripping.",
+  15: "Celebrated as the great American novel — and genuinely demanding. The cetology chapters are notorious. Rewards the committed reader.",
+  16: "Woolf removes plot entirely and replaces it with time, light, and consciousness. Beautiful but requires surrender to its rhythm.",
+  17: "Bowen's prose is precise and evasive at once — emotionally intelligent writing that rewards slow reading.",
+  18: "Written at 18, Shelley's novel is philosophically rich but never inaccessible. The Gothic framing carries the ideas clearly.",
+  19: "Bulgakov blends satire, fantasy, and tragedy in ways that can disorient at first — but the novel's energy keeps pulling you forward.",
+  20: "Hartley's famous opening sets the tone: nostalgic, portentous, quietly devastating. Elegant rather than difficult.",
+  21: "The oldest surviving epic in Western literature. A verse translation can ease the entry, but the scope and epithets take adjustment.",
+  22: "Kesey's counter-culture novel is direct and angry. The Chief's narrative voice adds complexity without obscuring the story.",
+  23: "Orwell writes with journalistic clarity in service of a terrifying vision. The ideas are dense; the prose is not.",
+  24: "Holden's voice is so vivid that the novel reads almost effortlessly — which disguises how much is going on beneath the surface.",
+  25: "Morrison's prose is incantatory and deliberately fragmented. One of the most powerful and formally demanding novels on the list.",
+  26: "Wodehouse is pure pleasure. The plots are intricate but the comedy carries everything — effortlessly readable.",
+  27: "Stoker's epistolary format (diaries, letters, newspaper clippings) is fun rather than demanding. Gothic adventure at heart.",
+  28: "Hinton wrote this at 16 and it reads with teenage directness. Emotionally raw but never formally difficult.",
+  29: "Wyndham's post-apocalyptic allegory is compelling and accessible. Ideas-driven sci-fi that never loses the human story.",
+  30: "Tolstoy's masterpiece in scale and humanity. The philosophical passages on history can be skipped — the novel survives it.",
+  31: "Dickens is theatrical and plot-heavy. Great Expectations rewards patience but never punishes the casual reader.",
+  32: "Baldwin writes with moral intensity and lyrical precision. Taboo subject matter in 1962 — the novel's power is undiminished.",
+  33: "Heller's non-linear, satirical structure can disorient early on. Stick with it — the logic reveals itself and becomes darkly funny.",
+  34: "Wharton's prose is controlled and precise. The tragedy operates through restraint, which requires the reader to pay close attention.",
+  35: "Achebe writes with deceptive simplicity. The novel's power lies in what it asks you to confront, not in stylistic difficulty.",
+  36: "George Eliot's great novel is long, dense, and rewards every page. The most intellectually ambitious Victorian novel on the list.",
+  37: "Du Maurier's gothic thriller is supremely readable — one of the few classics that genuinely grips like a beach novel.",
+  38: "Hardy's prose is rich but never impenetrable. The tragedy accumulates slowly; the emotional weight is heavy rather than formal.",
+  39: "Thackeray's satirical epic is long but lively. Becky Sharp is irresistible company — the length is the main obstacle.",
+  40: "Waugh's elegiac prose is beautiful and somewhat melancholy. More emotionally demanding than formally difficult.",
+  41: "Flaubert's prose style was revolutionary and it shows — precise, cold, exquisitely constructed. Worth reading slowly.",
+  42: "Eliot draws on her own frustration to write Maggie Tulliver with fierce empathy. Emotionally dense, stylistically manageable.",
+  43: "Trollope is easy company — his clerical world is rendered with wit and warmth. Accessible Victorian fiction at its best.",
+  44: "Lawrence's prose is sensuous and at times overwrought. The ideas about class and desire are more challenging than the writing.",
+  45: "Dumas writes with pace and excitement — this is a thriller dressed as a classic. Length is the only real challenge.",
+  46: "Steinbeck's social realism is clear-eyed and emotionally devastating. Direct prose, immense moral weight.",
+  47: "Joyce's Ulysses is the summit of modernist difficulty. Stream of consciousness, multiple styles, classical allusion — commit fully or read a guide alongside it.",
+  48: "Steinbeck's most ambitious novel — sweeping, biblical, deeply human. Demands investment but repays it generously.",
+  49: "Tolkien's world-building is immersive but the pacing of The Two Towers in particular tests patience. Ultimately rewarding.",
+  50: "Dostoevsky's final and greatest novel: philosophical, theological, criminal. Demanding but never inaccessible to a willing reader.",
+  51: "Mann's four-generation saga is dense and meticulously observed. A long commitment, but one of the great European novels.",
+  52: "Nabokov's prose is the most beautiful and the most unsettling on this list. The formal brilliance coexists with deep moral discomfort.",
+  53: "Burnett's novel is written for children but speaks to every age. Warm, readable, and quietly profound.",
+  54: "Waugh's Fleet Street satire is short and brilliantly funny. One of the easiest reads on the list.",
+  55: "Mitford writes social comedy with razor precision. Light, witty, and entirely accessible.",
+  56: "Dickens at his most melodramatic. The dual setting and guillotine tension carry you through the length.",
+  57: "The Grossmiths' satirical diary is gentle and hilarious. A classic that asks almost nothing of the reader.",
+  58: "Tolstoy's psychological depth is extraordinary. The tragedy of Anna is earned through patient, close attention to character.",
+  59: "Manzoni's Italian epic is vivid and socially acute. Less well known in English but not especially demanding to read.",
+  60: "Woolf uses Orlando's gender-fluid journey through centuries to interrogate literature itself. Playful and strange rather than opaque.",
+  61: "Rand's philosophical novel is very long and polemical. The ideas are forceful; the prose is functional rather than beautiful.",
+  62: "Wells packs enormous ideas into a short, fast novel. A gateway classic — ideal for first-time readers of the canon.",
+  63: "Sun Tzu is aphoristic and brief. The difficulty is interpretive — applying ancient military thought to modern life.",
+  64: "Galsworthy's multi-volume saga is long but compulsively readable. Victorian and Edwardian England rendered in warm detail.",
+  65: "Steinbeck at his most relaxed and personal. A road trip essay that reads quickly and stays with you.",
+  66: "Miller's autobiographical novel is deliberately transgressive. The prose is loose and sensory — not structurally demanding.",
+  67: "The first modern novel — enormously long, deeply funny, self-aware about being a novel. A commitment, but a joyful one.",
+  68: "Scott's quiet, elegiac novel is emotionally rich and formally unshowy. One of the more overlooked classics on the list.",
+  69: "Grahame's beloved children's book is beautifully written but never difficult. Pure pleasure at any age.",
+  70: "Greene constructs moral ambiguity with great economy. A short, dense novel that reveals more on each reread.",
+  71: "Emily Bronte's gothic romance is passionate and structurally unconventional — the narrative frame (Nelly, Lockwood) can disorient.",
+  72: "Suskind's novel is dark and obsessive. The prose is controlled and readable; the subject matter is deeply unsettling.",
+  73: "Twain's voice is colloquial and funny, but the dialect, racial politics, and moral complexity reward careful engagement.",
+  74: "Maugham's semi-autobiographical novel is long and psychologically penetrating. Readable but emotionally demanding.",
+  75: "Dickens at his most complex — multiple plotlines, legal labyrinth, spontaneous human combustion. Immense but deeply rewarding.",
+  76: "Austen's first published novel. The contrast between Marianne and Elinor is clear and engaging — very accessible.",
+  77: "Wilde's only novel is short, sharp, and brilliantly readable. The wit disguises the philosophical depth underneath.",
+  78: "Dickens's most beloved short work. Emotionally direct and instantly readable — the definition of an accessible classic.",
+  79: "Eliot's shorter novel is crystalline and moral. Easier than Middlemarch but shares its compassionate intelligence.",
+  80: "Woolf distils a single day into a meditation on time, memory, and death. Dense, beautiful, and resistant to easy summary.",
+  81: "Alcott's coming-of-age novel is warm and episodic. One of the most approachable books on the list.",
+  82: "Murdoch's Booker winner is rich and strange — obsession, memory, and the sea rendered in precise, compelling prose.",
+  83: "Dickens's own favourite child — long, warmly comic, and full of unforgettable characters. A pleasure rather than a challenge.",
+  84: "Kafka's unfinished novel is a nightmare of bureaucracy and alienation. Deliberately unresolvable — its difficulty is existential.",
+  85: "Graves writes history as intimate first-person drama. Absorbing and accessible; feels more like a thriller than a Roman history.",
+  86: "Angelou's memoir is direct, lyrical, and devastating. The difficulty is emotional, not formal.",
+  87: "Toole's comic masterpiece is carried by the force of Ignatius J. Reilly. Funny from the first page.",
+  88: "Maugham's philosophical novel is elegantly written and genuinely wise. Easier than its ideas might suggest.",
+  89: "Thompson's autobiographical portrait of rural England is gentle, specific, and beautifully observed.",
+  90: "Hardy's tragic novel is slower-burning than his others. The moorland atmosphere is immersive; the tragedy is merciless.",
+  91: "Joyce's first novel is the essential precursor to Ulysses — the style is forming here. Rich and more manageable than what followed.",
+  92: "Conrad packs immense moral and colonial weight into a short novella. The darkness is in the gaps — requires active reading.",
+  93: "Gaskell's romantic social novel is warm and driven. The industrial politics are integrated naturally into the love story.",
+  94: "Atwood's dystopian novel is urgent and immediate. One of the most accessible serious novels on the list.",
+  95: "Baldwin's second novel is short and precisely written. The emotional intensity is enormous; the style is limpid.",
+  96: "Puzo writes with pace and authority. The Godfather is a serious novel dressed as a blockbuster — readable and gripping.",
+  97: "Collins invented the modern thriller. Multiple narrators and a gripping mystery — the length flies by.",
+  98: "Solzhenitsyn's single-day account of a labour camp is spare and devastating. Short but leaves a long shadow.",
+  99: "One of Dostoevsky's shortest works. Melancholy and romantic — an ideal entry point to Russian literature.",
+  100: "Dickens at his most polemical. Shorter than his other major novels; the industrial critique is front and centre.",
+  101: "Mitchell's epic is absorbing and propulsive — the sheer scale is the challenge. The emotional storytelling carries you through.",
+  102: "Proust's seven-volume masterpiece is the longest and most demanding novel in the Western canon. Memory, time, and consciousness rendered in vast, sinuous sentences. Read it slowly, or not at all.",
+};
+
+// ---- THEME TAGS ----
+// Each book gets one or two theme tags used for profile matching
+// Themes: "dark_romantic", "social_conscience", "wit", "epic_traveller",
+//         "victorian", "modernist", "ancient_romantic",
+//         "challenger", "accessible"  (diff-axis handled in algorithm)
+const BOOK_THEMES = {
+  1:"victorian",       2:"social_conscience", 3:"modernist",
+  4:"epic_traveller",  5:"social_conscience", 6:"social_conscience",
+  7:"social_conscience",8:"wit",              9:"dark_romantic",
+  10:"dark_romantic",  11:"dark_romantic",    12:"epic_traveller",
+  13:"victorian",      14:"epic_traveller",   15:"epic_traveller",
+  16:"modernist",      17:"dark_romantic",    18:"dark_romantic",
+  19:"dark_romantic",  20:"victorian",        21:"ancient_romantic",
+  22:"social_conscience",23:"social_conscience",24:"modernist",
+  25:"social_conscience",26:"wit",            27:"dark_romantic",
+  28:"social_conscience",29:"social_conscience",30:"epic_traveller",
+  31:"victorian",      32:"social_conscience",33:"wit",
+  34:"victorian",      35:"social_conscience",36:"victorian",
+  37:"dark_romantic",  38:"victorian",        39:"victorian",
+  40:"victorian",      41:"victorian",        42:"victorian",
+  43:"victorian",      44:"modernist",        45:"epic_traveller",
+  46:"social_conscience",47:"modernist",      48:"epic_traveller",
+  49:"epic_traveller", 50:"dark_romantic",    51:"epic_traveller",
+  52:"dark_romantic",  53:"wit",              54:"wit",
+  55:"wit",            56:"epic_traveller",   57:"wit",
+  58:"victorian",      59:"ancient_romantic", 60:"modernist",
+  61:"social_conscience",62:"epic_traveller", 63:"ancient_romantic",
+  64:"victorian",      65:"epic_traveller",   66:"modernist",
+  67:"ancient_romantic",68:"social_conscience",69:"wit",
+  70:"social_conscience",71:"dark_romantic",  72:"dark_romantic",
+  73:"wit",            74:"modernist",        75:"victorian",
+  76:"victorian",      77:"dark_romantic",    78:"victorian",
+  79:"victorian",      80:"modernist",        81:"victorian",
+  82:"dark_romantic",  83:"victorian",        84:"dark_romantic",
+  85:"ancient_romantic",86:"social_conscience",87:"wit",
+  88:"modernist",      89:"victorian",        90:"victorian",
+  91:"modernist",      92:"social_conscience",93:"victorian",
+  94:"social_conscience",95:"social_conscience",96:"epic_traveller",
+  97:"dark_romantic",  98:"social_conscience",99:"dark_romantic",
+  100:"victorian",     101:"epic_traveller",  102:"modernist",
+};
+
+// ---- PROFILE DEFINITIONS ----
+const PROFILES = [
+  // Baseline
+  {
+    id: "uninitiated",
+    name: "The Uninitiated",
+    axis: null,
+    desc: "Your classics journey has not started yet — a whole world of literature awaits. Pick up any book from the list and begin.",
+    traits: ["Fresh start", "Open road", "Everything ahead"],
+  },
+  {
+    id: "newcomer",
+    name: "The Curious Newcomer",
+    axis: null,
+    desc: "You have dipped a toe into the vast ocean of classic literature. A handful of books is all it takes to start forming a literary sensibility — a sense of what moves you, what challenges you, what you want more of.",
+    traits: ["Early impressions", "Building taste", "First favourites"],
+  },
+  // Era axis
+  {
+    id: "victorian",
+    name: "The Victorian",
+    axis: "era",
+    desc: "The 19th century is your natural home. You are drawn to the world Dickens built — gas-lit streets, social injustice, impossible marriages, and characters so vividly rendered they feel like people you once knew. Whether it is Austen's drawing rooms, Hardy's heaths, or Eliot's moral universe, you read to inhabit a world where consequence still matters.",
+    traits: ["19th century", "Character-driven", "Social fabric"],
+  },
+  {
+    id: "modernist",
+    name: "The Modernist",
+    axis: "era",
+    desc: "You are drawn to the literature of rupture — the moment when writers stopped describing the world and started dismantling it. Stream of consciousness, unreliable narrators, fractured time: these are not obstacles to you, they are the point. Woolf, Joyce, Fitzgerald, Nabokov — you seek out writers who made form inseparable from feeling.",
+    traits: ["Early 20th century", "Experimental form", "Interior worlds"],
+  },
+  {
+    id: "ancient_romantic",
+    name: "The Ancients & Romantics",
+    axis: "era",
+    desc: "You read across the deepest stretch of literary time — from Homer's wine-dark sea to the Romantics wrestling with creation and consequence. You are comfortable with myth, allegory, and the kind of storytelling that does not explain itself. These books do not offer easy answers because they were written before anyone agreed on the questions.",
+    traits: ["Pre-1800s", "Epic tradition", "Mythic scale"],
+  },
+  // Difficulty axis
+  {
+    id: "challenger",
+    name: "The Challenger",
+    axis: "difficulty",
+    desc: "You do not read for comfort — you read for the feeling that a book has cost you something and given you something in return. Dostoevsky, Joyce, Woolf, Kafka: the most demanding books on this list are the ones you reach for first. Your reading is a form of intellectual ambition, and your bookshelves tell the story of a mind that refuses to take the easy path.",
+    traits: ["High difficulty", "Demanding reads", "Intellectual rigour"],
+  },
+  {
+    id: "accessible",
+    name: "The Storyteller's Reader",
+    axis: "difficulty",
+    desc: "You read for story, character, and the pleasure of being carried somewhere entirely other than where you are. You have no patience for the self-consciously difficult, and you do not need to be. The books you love are proof that clarity is not the enemy of depth — Austen, Steinbeck, Tolkien, Atwood all knew that the best ideas travel furthest in the most readable form.",
+    traits: ["Accessible reads", "Story first", "Character above all"],
+  },
+  // Theme axis
+  {
+    id: "dark_romantic",
+    name: "The Dark Romantic",
+    axis: "theme",
+    desc: "Something in you is drawn to the shadow side of literature — the Gothic, the psychological, the obsessive. You read about minds unravelling, houses with secrets, love that destroys. From Brontë to Nabokov to Kafka, the books you choose share a fascination with the dark machinery underneath civilised life. You are not afraid of what fiction can reveal.",
+    traits: ["Gothic & Horror", "Psychological depth", "Shadows & secrets"],
+  },
+  {
+    id: "social_conscience",
+    name: "The Social Conscience",
+    axis: "theme",
+    desc: "Literature is not, for you, an escape from the world — it is a way of seeing the world more clearly. You are drawn to books that take a side: against injustice, against silence, against the comfortable lie. Morrison, Baldwin, Achebe, Atwood, Orwell — your reading list doubles as a moral education, and you would not have it any other way.",
+    traits: ["Political & social", "Moral urgency", "Marginalised voices"],
+  },
+  {
+    id: "wit",
+    name: "The Wit",
+    axis: "theme",
+    desc: "You believe — correctly — that comedy is the hardest thing to write and the most underestimated form of intelligence. Wodehouse at his most absurd, Austen at her sharpest, Waugh at his most savage: these are your touchstones. Wit is not the opposite of depth; it is depth delivered at speed, and the books you love prove it on every page.",
+    traits: ["Comedy & satire", "Sharp prose", "Lightness with bite"],
+  },
+  {
+    id: "epic_traveller",
+    name: "The Epic Traveller",
+    axis: "theme",
+    desc: "You read to travel — not just geographically but across the full scope of human endeavour. War, adventure, generations rising and falling, quests that take years and continents. Hugo, Tolstoy, Tolkien, Dumas, Steinbeck: you want books that feel like they contain whole worlds, because the best ones do. A book under 500 pages is barely a warm-up.",
+    traits: ["Epic scale", "Adventure & saga", "World-spanning"],
+  },
+  // Breadth axis
+  {
+    id: "generalist",
+    name: "The Generalist",
+    axis: "breadth",
+    desc: "You have no fixed allegiances in literature — and that is a rare and valuable thing. Your reading cuts across eras, genres, and styles with genuine curiosity rather than systematic intent. You are the reader most likely to have an unexpected favourite, to make connections across centuries, and to find yourself surprised by what moves you. Range is its own form of wisdom.",
+    traits: ["Cross-era", "Multi-genre", "Eclectic curiosity"],
+  },
+  {
+    id: "obsessive",
+    name: "The Obsessive",
+    axis: "breadth",
+    desc: "When you find something you love, you go deep. Your reading has a gravitational centre — a genre, a sensibility, a way of seeing the world — and everything else orbits it. This is not a limitation; it is how expertise is built. You likely know your chosen territory better than almost anyone, and you read with the authority of someone who has mapped every corner of it.",
+    traits: ["Deep focus", "Mastery mindset", "Singular taste"],
+  },
+];
+
+// ---- PROFILE ALGORITHM ----
+function getProfile(readBooks) {
+  const n = readBooks.length;
+  if (n === 0) return PROFILES.find(p => p.id === "uninitiated");
+  if (n < 5)  return PROFILES.find(p => p.id === "newcomer");
+
+  // Score each book's theme
+  const themeCounts = {};
+  readBooks.forEach(b => {
+    const t = BOOK_THEMES[b.id];
+    if (t) themeCounts[t] = (themeCounts[t] || 0) + 1;
+  });
+
+  // Era axis: victorian / modernist / ancient_romantic
+  const eraThemes = ["victorian", "modernist", "ancient_romantic"];
+  const eraScores = eraThemes.map(t => ({ t, pct: (themeCounts[t] || 0) / n }));
+  const topEra = eraScores.sort((a,b) => b.pct - a.pct)[0];
+  // Strong era signal = top era is 35%+ of reads
+  if (topEra.pct >= 0.35) return PROFILES.find(p => p.id === topEra.t);
+
+  // Difficulty axis: avg diff >= 2.6 = challenger, <= 1.55 = accessible
+  const avgDiff = readBooks.reduce((s, b) => s + b.diff, 0) / n;
+  if (avgDiff >= 2.6) return PROFILES.find(p => p.id === "challenger");
+  if (avgDiff <= 1.55) return PROFILES.find(p => p.id === "accessible");
+
+  // Theme axis: dark_romantic / social_conscience / wit / epic_traveller
+  const themeProfiles = ["dark_romantic", "social_conscience", "wit", "epic_traveller"];
+  const themeScores = themeProfiles.map(t => ({ t, pct: (themeCounts[t] || 0) / n }));
+  const topTheme = themeScores.sort((a,b) => b.pct - a.pct)[0];
+  // Strong theme signal = 30%+ of reads
+  if (topTheme.pct >= 0.30) return PROFILES.find(p => p.id === topTheme.t);
+
+  // Breadth axis: count distinct themes
+  const distinctThemes = Object.keys(themeCounts).length;
+  const topThemeAbs = themeScores[0];
+  // Obsessive = single theme dominates 40%+ even if below earlier thresholds
+  if (topThemeAbs.pct >= 0.40) return PROFILES.find(p => p.id === "obsessive");
+  // Generalist = 5+ distinct themes covered
+  if (distinctThemes >= 5) return PROFILES.find(p => p.id === "generalist");
+
+  // Fallback: return whichever theme scores highest
+  return PROFILES.find(p => p.id === topTheme.t) || PROFILES.find(p => p.id === "newcomer");
+}
+
+// ---- STATE ----
+let checked = new Set(JSON.parse(localStorage.getItem('classics_checked') || '[]'));
+let activeFilter = 'all';
+let searchQ = '';
+
+function save() {
+  localStorage.setItem('classics_checked', JSON.stringify([...checked]));
+}
+
+function updateScore() {
+  const n = checked.size;
+  const readBooks = BOOKS.filter(b => checked.has(b.id));
+  const diffScore = readBooks.reduce((sum, b) => sum + b.diff, 0);
+  const MAX_DIFF = 186;
+
+  document.getElementById('score-num').textContent = n;
+  document.getElementById('diff-num').textContent = diffScore;
+
+  const pct = Math.round((n / 102) * 100);
+  const diffPct = Math.round((diffScore / MAX_DIFF) * 100);
+
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('diff-fill').style.width = diffPct + '%';
+  document.getElementById('progress-pct').textContent = pct + '%';
+  document.getElementById('diff-pct').textContent = diffPct + '%';
+
+  const remaining = 102 - n;
+  document.getElementById('progress-text').textContent = remaining > 0
+    ? remaining + ' books remaining · avg difficulty ' + (n > 0 ? (diffScore / n).toFixed(1) : '—') + '/4'
+    : 'All 102 books read! Maximum difficulty score: ' + MAX_DIFF;
+
+  const p = getProfile(readBooks);
+  document.getElementById('badge-title').textContent = p.name;
+  updateProfile(n, p, readBooks);
+  updateRoadmap();
+}
+
+function updateProfile(n, p, readBooks) {
+  if (n === 0) {
+    document.getElementById('profile-empty').style.display = 'block';
+    document.getElementById('profile-content').style.display = 'none';
+    return;
+  }
+  document.getElementById('profile-empty').style.display = 'none';
+  document.getElementById('profile-content').style.display = 'block';
+  document.getElementById('profile-big-name').textContent = p.name;
+  document.getElementById('profile-big-desc').textContent = p.desc;
+  document.getElementById('stat-read').textContent = n;
+  document.getElementById('stat-pct').textContent = Math.round((n/102)*100) + '%';
+
+  // difficulty
+  const diffScore = readBooks.reduce((sum, b) => sum + b.diff, 0);
+  const avgDiff = (diffScore / n).toFixed(1);
+  document.getElementById('stat-diffscore').textContent = diffScore;
+  document.getElementById('stat-avgdiff').textContent = avgDiff + '/4';
+
+  // era
+  const centuries = {};
+  readBooks.forEach(b => { centuries[b.era] = (centuries[b.era]||0)+1; });
+  const topEra = Object.entries(centuries).sort((a,b)=>b[1]-a[1])[0];
+  document.getElementById('stat-century').textContent = topEra ? topEra[0].replace(' Century','') : '—';
+
+  // genres
+  const genres = {};
+  readBooks.forEach(b => { genres[b.genre] = (genres[b.genre]||0)+1; });
+  const sortedGenres = Object.entries(genres).sort((a,b)=>b[1]-a[1]);
+  document.getElementById('stat-streak').textContent = sortedGenres[0] ? sortedGenres[0][0].split('/')[0].trim() : '—';
+
+  // genre bars
+  const maxG = sortedGenres[0] ? sortedGenres[0][1] : 1;
+  let barsHtml = '';
+  sortedGenres.slice(0, 8).forEach(([genre, cnt]) => {
+    const color = GENRE_COLORS[genre] || '#7a6e58';
+    const pct = Math.round((cnt/maxG)*100);
+    barsHtml += `<div class="genre-row">
+      <div class="genre-name">${genre}</div>
+      <div class="genre-bar-wrap"><div class="genre-bar" style="width:${pct}%;background:${color}"></div></div>
+      <div class="genre-count">${cnt} read</div>
+    </div>`;
+  });
+  document.getElementById('genre-bars').innerHTML = barsHtml;
+
+  // difficulty breakdown bars
+  const diffBuckets = [
+    { label: 'Easy',           level: 1, color: '#2e7d32' },
+    { label: 'Moderate',       level: 2, color: '#d4521a' },
+    { label: 'Demanding',      level: 3, color: '#1a5c5a' },
+    { label: 'Very Demanding', level: 4, color: '#4a3060' },
+  ];
+  const diffCounts = {1:0, 2:0, 3:0, 4:0};
+  readBooks.forEach(b => { if (diffCounts[b.diff] !== undefined) diffCounts[b.diff]++; });
+  const maxD = Math.max(...Object.values(diffCounts), 1);
+  let diffHtml = '';
+  diffBuckets.forEach(({ label, level, color }) => {
+    const cnt = diffCounts[level];
+    const pct = Math.round((cnt / maxD) * 100);
+    const dots = Array.from({length:4}, (_,i) =>
+      `<span style="display:inline-block;width:7px;height:7px;border-radius:50%;margin-right:2px;background:${i < level ? color : 'var(--border)'}"></span>`
+    ).join('');
+    diffHtml += `<div class="genre-row">
+      <div class="genre-name" style="display:flex;align-items:center;gap:6px">${dots}${label}</div>
+      <div class="genre-bar-wrap"><div class="genre-bar" style="width:${pct}%;background:${color}"></div></div>
+      <div class="genre-count">${cnt} read</div>
+    </div>`;
+  });
+  document.getElementById('diff-bars').innerHTML = diffHtml;
+}
+// ---- PERSPECTIVE TAGS ----
+// Each book gets 1-2 perspectives: what lens it primarily operates through
+// Values: "class","gender","race","identity","power","morality","war","faith",
+//         "family","love","freedom","society","individual","nature","time","art"
+const BOOK_PERSPECTIVES = {
+  1:["class","love"],        2:["race","morality"],      3:["class","individual"],
+  4:["family","time"],       5:["morality","power"],     6:["race","gender"],
+  7:["freedom","power"],     8:["family","love"],        9:["gender","individual"],
+  10:["morality","individual"],11:["class","power"],     12:["nature","freedom"],
+  13:["love","class"],       14:["freedom","morality"],  15:["nature","individual"],
+  16:["time","individual"],  17:["love","class"],        18:["individual","morality"],
+  19:["power","faith"],      20:["class","love"],        21:["war","morality"],
+  22:["freedom","power"],    23:["power","freedom"],     24:["individual","family"],
+  25:["race","family"],      26:["class","society"],     27:["morality","individual"],
+  28:["class","identity"],   29:["freedom","society"],   30:["war","family"],
+  31:["class","individual"], 32:["race","love"],         33:["war","freedom"],
+  34:["love","class"],       35:["race","power"],        36:["society","morality"],
+  37:["love","power"],       38:["gender","class"],      39:["class","gender"],
+  40:["faith","class"],      41:["love","gender"],       42:["gender","society"],
+  43:["power","class"],      44:["love","class"],        45:["morality","freedom"],
+  46:["class","family"],     47:["time","individual"],   48:["family","morality"],
+  49:["morality","war"],     50:["faith","morality"],    51:["family","class"],
+  52:["individual","morality"],53:["nature","family"],   54:["power","society"],
+  55:["class","love"],       56:["war","morality"],      57:["class","individual"],
+  58:["love","society"],     59:["love","faith"],        60:["gender","time"],
+  61:["freedom","individual"],62:["class","time"],       63:["power","society"],
+  64:["family","class"],     65:["nature","individual"], 66:["freedom","individual"],
+  67:["individual","society"],68:["race","identity"],    69:["nature","family"],
+  70:["war","morality"],     71:["love","individual"],   72:["individual","society"],
+  73:["race","freedom"],     74:["love","individual"],   75:["class","power"],
+  76:["love","class"],       77:["morality","individual"],78:["morality","family"],
+  79:["faith","class"],      80:["time","individual"],   81:["family","gender"],
+  82:["love","individual"],  83:["class","family"],      84:["power","individual"],
+  85:["power","morality"],   86:["race","gender"],       87:["individual","society"],
+  88:["faith","individual"], 89:["class","family"],      90:["gender","love"],
+  91:["art","individual"],   92:["race","power"],        93:["class","love"],
+  94:["gender","power"],     95:["love","identity"],     96:["family","power"],
+  97:["class","gender"],     98:["power","individual"],  99:["love","individual"],
+  100:["class","society"],   101:["war","love"],         102:["time","individual"],
+};
+
+function updateRoadmap() {
+  const n = checked.size;
+  const intro = document.getElementById('roadmap-intro');
+  const tiers = document.getElementById('roadmap-tiers');
+  const unread = BOOKS.filter(b => !checked.has(b.id));
+  const read   = BOOKS.filter(b =>  checked.has(b.id));
+
+  if (n === 0) {
+    intro.textContent = "Check off books you've read in the Checklist tab and your personalised reading roadmap will appear here.";
+    tiers.innerHTML = '';
+    return;
+  }
+
+  intro.textContent = `Based on your ${n} books read, here are personalised reading groups — books chosen for thematic affinity, productive contrast, and perspective you may not have encountered yet.`;
+
+  // ---- build reader signal ----
+  const themeCounts = {}, perspCounts = {}, eraCounts = {};
+  const diffSum = read.reduce((s,b) => s + b.diff, 0);
+  const avgDiff = diffSum / n;
+
+  read.forEach(b => {
+    const t = BOOK_THEMES[b.id];
+    if (t) themeCounts[t] = (themeCounts[t]||0)+1;
+    eraCounts[b.era] = (eraCounts[b.era]||0)+1;
+    (BOOK_PERSPECTIVES[b.id]||[]).forEach(p => perspCounts[p] = (perspCounts[p]||0)+1);
+  });
+
+  const topTheme  = Object.entries(themeCounts).sort((a,b)=>b[1]-a[1])[0]?.[0];
+  const topPersp  = Object.entries(perspCounts).sort((a,b)=>b[1]-a[1])[0]?.[0];
+  const topEra    = Object.entries(eraCounts).sort((a,b)=>b[1]-a[1])[0]?.[0];
+
+  // perspectives reader has NOT explored much
+  const allPersps = ["class","gender","race","identity","power","morality","war","faith","family","love","freedom","society","individual","nature","time","art"];
+  const weakPersps = allPersps.filter(p => (perspCounts[p]||0) === 0).slice(0,4);
+  // themes reader has NOT explored
+  const allThemes = ["victorian","modernist","ancient_romantic","dark_romantic","social_conscience","wit","epic_traveller"];
+  const weakThemes = allThemes.filter(t => (themeCounts[t]||0) === 0).slice(0,3);
+
+  // score an unread book for thematic affinity
+  function affinityScore(b) {
+    let s = 0;
+    const bt = BOOK_THEMES[b.id];
+    if (bt && themeCounts[bt]) s += themeCounts[bt] * 2;
+    (BOOK_PERSPECTIVES[b.id]||[]).forEach(p => { if (perspCounts[p]) s += perspCounts[p]; });
+    // slight nudge toward reader's avg difficulty range
+    s -= Math.abs(b.diff - avgDiff) * 0.5;
+    return s;
+  }
+
+  // helper: pick best N unread books by score, avoiding duplicates across groups
+  const used = new Set();
+  function pick(pool, n, sortFn) {
+    return pool
+      .filter(b => !used.has(b.id))
+      .sort(sortFn)
+      .slice(0, n);
+  }
+  function commit(books) { books.forEach(b => used.add(b.id)); return books; }
+
+  const groups = [];
+
+  // ---- GROUP 1: More of what you love ----
+  if (topTheme) {
+    const pool = unread.filter(b => BOOK_THEMES[b.id] === topTheme);
+    const books = commit(pick(pool, 8, (a,b) => affinityScore(b) - affinityScore(a)));
+    if (books.length >= 2) {
+      const themeLabels = {
+        victorian:"Victorian Drama", modernist:"Modernist Fiction",
+        ancient_romantic:"Ancients & Romantics", dark_romantic:"Dark & Gothic Fiction",
+        social_conscience:"Social Conscience Fiction", wit:"Comedy & Satire",
+        epic_traveller:"Epic & Adventure"
+      };
+      groups.push({
+        title: "More of What You Love",
+        color: "#d4521a",
+        icon: "♥",
+        why: `You've shown a strong affinity for ${themeLabels[topTheme]||topTheme}. These unread books sit squarely in that tradition — they will feel familiar in sensibility while giving you new authors, eras, and arguments to engage with.`,
+        books,
+        highlight: books.find(b => Math.abs(b.diff - avgDiff) <= 0.5) || books[0],
+      });
+    }
+  }
+
+  // ---- GROUP 2: Same perspective, different world ----
+  if (topPersp) {
+    const pool = unread.filter(b => {
+      const ps = BOOK_PERSPECTIVES[b.id]||[];
+      const bt = BOOK_THEMES[b.id];
+      // same perspective, but different theme or different era from top
+      return ps.includes(topPersp) && (bt !== topTheme || b.era !== topEra);
+    });
+    const books = commit(pick(pool, 8, (a,b) => affinityScore(b) - affinityScore(a)));
+    if (books.length >= 2) {
+      const perspLabels = {
+        class:"class and social hierarchy", gender:"gender and power",
+        race:"race and identity", identity:"identity and belonging",
+        power:"power and its abuses", morality:"moral reckoning",
+        war:"war and its cost", faith:"faith and doubt",
+        family:"family and inheritance", love:"love and its consequences",
+        freedom:"freedom and constraint", society:"society and the individual",
+        individual:"the individual consciousness", nature:"nature and place",
+        time:"time and memory", art:"art and the creative life"
+      };
+      groups.push({
+        title: "Same Question, Different World",
+        color: "#1a5c5a",
+        icon: "◎",
+        why: `Your reading consistently returns to questions of ${perspLabels[topPersp]||topPersp}. These books tackle the same preoccupation but from different eras, cultures, or angles — they will deepen your thinking by showing how different writers answered the same question.`,
+        books,
+        highlight: books.find(b => b.diff <= avgDiff + 0.5 && BOOK_THEMES[b.id] !== topTheme) || books[0],
+      });
+    }
+  }
+
+  // ---- GROUP 3: Productive contrast ----
+  // Books that actively argue a different perspective to your most-read ones
+  const contrastPersp = allPersps
+    .filter(p => (perspCounts[p]||0) === 0 || perspCounts[p] < n * 0.1)
+    .filter(p => unread.some(b => (BOOK_PERSPECTIVES[b.id]||[]).includes(p)))[0];
+
+  if (contrastPersp) {
+    const pool = unread.filter(b => (BOOK_PERSPECTIVES[b.id]||[]).includes(contrastPersp));
+    const books = commit(pick(pool, 7, (a,b) => a.diff - b.diff));
+    if (books.length >= 2) {
+      const contrastLabels = {
+        class:"class", gender:"gender", race:"race and colonialism",
+        identity:"identity", power:"power", morality:"moral philosophy",
+        war:"war", faith:"faith and religion", family:"family",
+        love:"love", freedom:"freedom", society:"society",
+        individual:"the individual", nature:"nature", time:"time and memory", art:"art"
+      };
+      groups.push({
+        title: "A Productive Argument",
+        color: "#6a1b9a",
+        icon: "↯",
+        why: `You have read very little through the lens of ${contrastLabels[contrastPersp]||contrastPersp}. These books will push back on assumptions your current reading may have reinforced — not to contradict what you've enjoyed, but to complicate and enrich it.`,
+        books,
+        highlight: books.find(b => b.diff <= Math.ceil(avgDiff)) || books[0],
+      });
+    }
+  }
+
+  // ---- GROUP 4: Stretch reads ----
+  // One notch harder than avg, from themes reader already values
+  const stretchDiff = Math.min(4, Math.round(avgDiff) + 1);
+  const stretchPool = unread.filter(b => b.diff === stretchDiff);
+  const stretchBooks = commit(pick(stretchPool, 7, (a,b) => affinityScore(b) - affinityScore(a)));
+  if (stretchBooks.length >= 2) {
+    const diffLabels2 = {1:"easy",2:"moderate",3:"demanding",4:"very demanding"};
+    groups.push({
+      title: "One Step Further",
+      color: "#b8860b",
+      icon: "↑",
+      why: `Your average difficulty is ${avgDiff.toFixed(1)}/4. These books are rated ${diffLabels2[stretchDiff]||stretchDiff} — one notch above your current range — but chosen because they share themes and perspectives you already care about. The challenge feels earned rather than arbitrary.`,
+      books: stretchBooks,
+      highlight: stretchBooks.find(b => {
+        const bt = BOOK_THEMES[b.id];
+        return bt && (themeCounts[bt]||0) > 0;
+      }) || stretchBooks[0],
+    });
+  }
+
+  // ---- GROUP 5: Unexplored territory ----
+  const unexploredPool = unread.filter(b => {
+    const bt = BOOK_THEMES[b.id];
+    return bt && weakThemes.includes(bt);
+  });
+  const unexploredBooks = commit(pick(unexploredPool, 7, (a,b) => a.diff - b.diff));
+  if (unexploredBooks.length >= 2) {
+    groups.push({
+      title: "Unexplored Territory",
+      color: "#37474f",
+      icon: "→",
+      why: `These books come from corners of the list you have not touched yet. They are not chosen because they match your taste — they are chosen precisely because they do not. The most surprising reading experiences usually come from outside the familiar.`,
+      books: unexploredBooks,
+      highlight: unexploredBooks[0],
+    });
+  }
+
+  // ---- RENDER ----
+  let html = '';
+
+  // Completed section (unchanged)
+  if (read.length > 0) {
+    html += `<div class="roadmap-tier" style="opacity:0.6;margin-bottom:32px">
+      <div class="tier-header">
+        <div class="tier-num" style="background:#7a6e58">✓</div>
+        <div><div class="tier-title">Completed (${read.length})</div><div class="tier-desc">Books you've already read</div></div>
+      </div>
+      <div class="tier-books">
+        ${read.map(b => `<div class="roadmap-book done" onclick="toggleBook(${b.id})">
+          <div class="rb-done-badge">Read</div>
+          <div class="rb-title">${b.title}</div>
+          <div class="rb-author">${b.author}</div>
+        </div>`).join('')}
+      </div>
+    </div>`;
+  }
+
+  // Recommendation groups
+  groups.forEach(g => {
+    html += `<div class="roadmap-tier rec-group" style="margin-bottom:36px">
+      <div class="rec-group-header" style="border-left:4px solid ${g.color}">
+        <div class="rec-group-icon" style="color:${g.color}">${g.icon}</div>
+        <div>
+          <div class="rec-group-title">${g.title}</div>
+          <div class="rec-group-why">${g.why}</div>
+        </div>
+      </div>
+      <div class="tier-books" style="padding-left:0;margin-top:12px">
+        ${g.books.map(b => {
+          const isHighlight = b.id === g.highlight?.id;
+          const diffColors2 = {1:'#2e7d32',2:'#d4521a',3:'#1a5c5a',4:'#4a3060'};
+          const diffLabels2 = {1:'Easy',2:'Moderate',3:'Demanding',4:'Very Demanding'};
+          return `<div class="roadmap-book${b.id===g.highlight?.id?' rec-highlight':''} ${checked.has(b.id)?'done':''}" onclick="toggleBook(${b.id})">
+            ${isHighlight ? `<div class="rec-start-badge">Start here</div>` : ''}
+            ${checked.has(b.id) ? `<div class="rb-done-badge">Read</div>` : ''}
+            <div class="rb-title">${b.title}</div>
+            <div class="rb-author">${b.author} · ${Math.abs(b.year)}${b.year<0?' BC':''}</div>
+            <div class="rb-diff" style="color:${diffColors2[b.diff]}">
+              ${Array.from({length:4},(_,i)=>`<span style="display:inline-block;width:5px;height:5px;border-radius:50%;background:${i<b.diff?diffColors2[b.diff]:'var(--border)'};margin-right:2px"></span>`).join('')}
+              ${diffLabels2[b.diff]}
+            </div>
+          </div>`;
+        }).join('')}
+      </div>
+    </div>`;
+  });
+
+  tiers.innerHTML = html;
+}
+
+function toggleBook(id) {
+  if (checked.has(id)) { checked.delete(id); } else { checked.add(id); }
+  save();
+  renderList();
+  updateScore();
+  // Update roadmap book appearance live
+  document.querySelectorAll('.roadmap-book').forEach(el => {
+    const onclick = el.getAttribute('onclick');
+    if (!onclick) return;
+    const bookId = parseInt(onclick.match(/\d+/)[0]);
+    if (bookId === id) {
+      if (checked.has(id)) { el.classList.add('done'); } else { el.classList.remove('done'); }
+    }
+  });
+}
+
+function renderList() {
+  const container = document.getElementById('book-list');
+  const noResults = document.getElementById('no-results');
+  const q = searchQ.toLowerCase();
+
+  let visible = BOOKS.filter(b => {
+    const matchSearch = !q || b.title.toLowerCase().includes(q) || b.author.toLowerCase().includes(q) || b.genre.toLowerCase().includes(q);
+    const matchFilter = activeFilter === 'all' || (activeFilter === 'read' && checked.has(b.id)) || (activeFilter === 'unread' && !checked.has(b.id));
+    return matchSearch && matchFilter;
+  });
+
+  if (visible.length === 0) {
+    container.innerHTML = '';
+    noResults.style.display = 'block';
+    return;
+  }
+  noResults.style.display = 'none';
+
+  container.innerHTML = visible.map(b => {
+    const isChecked = checked.has(b.id);
+    const color = GENRE_COLORS[b.genre] || '#7a6e58';
+    const diffLabels = {1:'Easy',2:'Moderate',3:'Demanding',4:'Very Demanding'};
+    const diffColors = {1:'#2e7d32',2:'#d4521a',3:'#1a5c5a',4:'#4a3060'};
+    const diffDots = Array.from({length:4},(_,i)=>`<span class="diff-dot${i<b.diff?' filled':''}" style="${i<b.diff?'background:'+diffColors[b.diff]:''}"></span>`).join('');
+    const blurb = DIFF_BLURBS[b.id] || '';
+    return `<div class="book-item${isChecked ? ' checked' : ''}" data-id="${b.id}" onclick="handleCheck(${b.id})">
+      <div class="book-num">${String(b.id).padStart(2,'0')}</div>
+      <div class="book-checkbox">
+        <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+          <polyline points="2,6 5,9 10,3" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </div>
+      <div class="book-info">
+        <div class="book-title">${b.title}</div>
+        <div class="book-meta">${b.author} · ${Math.abs(b.year)}${b.year < 0 ? ' BC' : ''}</div>
+      </div>
+      <span class="genre-tag" style="background:${color}22;color:${color};border:1px solid ${color}44">${b.genre}</span>
+      <div class="diff-pip" data-blurb="${blurb}">
+        ${diffDots}<span class="diff-pip-label">${diffLabels[b.diff]}</span>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+function handleCheck(id) {
+  const el = document.querySelector(`.book-item[data-id="${id}"]`);
+  if (el) {
+    el.classList.add('just-checked');
+    setTimeout(() => el.classList.remove('just-checked'), 300);
+  }
+  toggleBook(id);
+}
+
+// ---- INIT ----
+document.getElementById('search-input').addEventListener('input', e => {
+  searchQ = e.target.value;
+  renderList();
+});
+
+
+
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    activeFilter = btn.dataset.filter;
+    renderList();
+  });
+});
+
+document.querySelectorAll('.tab-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+    document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+    if (btn.dataset.tab === 'roadmap') updateRoadmap();
+  });
+});
+
+// ---- TOOLTIP ----
+document.getElementById('book-list').addEventListener('mouseover', e => {
+  const pip = e.target.closest('.diff-pip');
+  if (!pip) return;
+  const blurb = pip.dataset.blurb;
+  if (!blurb) return;
+  const tt = document.getElementById('diff-tooltip');
+  if (!tt) return;
+  tt.textContent = blurb;
+  tt.style.display = 'block';
+  positionTooltip(e);
+});
+
+document.getElementById('book-list').addEventListener('mousemove', e => {
+  if (!e.target.closest('.diff-pip')) return;
+  positionTooltip(e);
+});
+
+document.getElementById('book-list').addEventListener('mouseout', e => {
+  if (!e.target.closest('.diff-pip')) return;
+  const tt = document.getElementById('diff-tooltip');
+  if (tt) tt.style.display = 'none';
+});
+
+function positionTooltip(e) {
+  const tt = document.getElementById('diff-tooltip');
+  if (!tt) return;
+  const margin = 12;
+  const tw = 240;
+  let x = e.clientX - tw - margin;
+  let y = e.clientY - tt.offsetHeight / 2;
+  if (x < margin) x = e.clientX + margin;
+  if (y < margin) y = margin;
+  if (y + tt.offsetHeight > window.innerHeight - margin) {
+    y = window.innerHeight - tt.offsetHeight - margin;
+  }
+  tt.style.left = x + 'px';
+  tt.style.top  = y + 'px';
+}
+
+renderList();
+updateScore();
+</script>
+
+<div class="diff-tooltip" id="diff-tooltip"></div>
+
+</body>
+</html>
