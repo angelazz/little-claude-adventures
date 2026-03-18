@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reader Profiles — Penguin Classics Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lora:ital,wght@0,400;0,500;0,600;1,400&family=Courier+Prime:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --ink: #1a1208; --paper: #f5f0e8; --cream: #ede8d8; --aged: #d4c9a8;
+    --orange: #d4521a; --teal: #1a5c5a; --gold: #b8860b; --muted: #7a6e58; --border: #c8bfa8;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'Lora', Georgia, serif; background: var(--paper); color: var(--ink); min-height: 100vh;
+    background-image:
+      repeating-linear-gradient(0deg, transparent, transparent 27px, rgba(200,191,168,0.25) 27px, rgba(200,191,168,0.25) 28px),
+      url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23c8bfa8' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+  .site-header { background: var(--ink); color: var(--paper); }
+  .header-stripe { background: var(--orange); height: 6px; }
+  .header-inner {
+    max-width: 900px; margin: 0 auto; padding: 36px 24px 28px;
+    display: flex; align-items: flex-end; justify-content: space-between; gap: 20px; flex-wrap: wrap;
+  }
+  .header-title h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(1.8rem, 4vw, 2.8rem); font-weight: 900; line-height: 1.05; letter-spacing: -0.02em;
+  }
+  .header-title h1 em { font-style: italic; color: var(--orange); }
+  .header-title p {
+    font-family: 'Courier Prime', monospace; font-size: 0.75rem;
+    color: var(--aged); letter-spacing: 0.12em; text-transform: uppercase; margin-top: 8px;
+  }
+  .back-link {
+    font-family: 'Courier Prime', monospace; font-size: 0.72rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--aged); text-decoration: none;
+    display: flex; align-items: center; gap: 6px;
+    border: 1px solid rgba(255,255,255,0.2); padding: 8px 14px; border-radius: 2px;
+    transition: all 0.2s; white-space: nowrap; flex-shrink: 0;
+  }
+  .back-link:hover { color: white; border-color: rgba(255,255,255,0.5); }
+
+  .intro-band { background: var(--orange); color: white; }
+  .intro-inner {
+    max-width: 900px; margin: 0 auto; padding: 18px 24px;
+    font-family: 'Lora', serif; font-size: 0.88rem; line-height: 1.65;
+  }
+  .intro-inner strong { font-weight: 600; }
+
+  .main { max-width: 900px; margin: 0 auto; padding: 36px 24px 80px; }
+
+  .axis-section { margin-bottom: 40px; }
+  .axis-header {
+    display: flex; align-items: center; gap: 12px;
+    margin-bottom: 0; padding-bottom: 10px; border-bottom: 2px solid var(--border);
+    flex-wrap: wrap;
+  }
+  .axis-pill {
+    font-family: 'Courier Prime', monospace; font-size: 0.6rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 4px 10px; border-radius: 1px; color: white; flex-shrink: 0;
+  }
+  .axis-title {
+    font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--ink);
+  }
+  .axis-how {
+    font-family: 'Lora', serif; font-size: 0.75rem; font-style: italic;
+    color: var(--muted); margin-left: auto;
+  }
+
+  .profile-entry {
+    display: grid; grid-template-columns: 190px 1fr;
+    border: 1.5px solid var(--border); border-top: none;
+    background: var(--cream); transition: background 0.15s;
+    position: relative; overflow: hidden;
+  }
+  .axis-section > .profile-entry:first-of-type { border-top: 1.5px solid var(--border); }
+  .profile-entry:last-of-type { border-radius: 0 0 2px 2px; }
+  .profile-entry:hover { background: #ede5cc; }
+  .profile-entry::before {
+    content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px;
+  }
+  .profile-left {
+    padding: 22px 18px 22px 22px; border-right: 1.5px solid var(--border);
+    display: flex; flex-direction: column; justify-content: center;
+  }
+  .profile-axis-label {
+    font-family: 'Courier Prime', monospace; font-size: 0.58rem;
+    letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 5px; opacity: 0.8;
+  }
+  .profile-name {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.1rem; font-weight: 700; font-style: italic; line-height: 1.25;
+  }
+  .current-badge {
+    display: none; font-family: 'Courier Prime', monospace; font-size: 0.58rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    background: var(--orange); color: white; padding: 3px 8px;
+    border-radius: 1px; margin-top: 10px; width: fit-content;
+  }
+  .profile-entry.is-current .current-badge { display: block; }
+  .profile-right {
+    padding: 22px 22px 22px 18px;
+    display: flex; flex-direction: column; justify-content: center; gap: 10px;
+  }
+  .profile-blurb {
+    font-family: 'Lora', serif; font-size: 0.88rem; line-height: 1.75; color: var(--ink);
+  }
+  .profile-traits { display: flex; flex-wrap: wrap; gap: 5px; }
+  .trait-tag {
+    font-family: 'Courier Prime', monospace; font-size: 0.6rem;
+    letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 8px; border-radius: 1px;
+    background: rgba(0,0,0,0.05); color: var(--muted); border: 1px solid var(--border);
+  }
+
+  .profile-entry.is-current { background: var(--ink); color: var(--paper); }
+  .profile-entry.is-current .profile-left { border-right-color: rgba(255,255,255,0.12); }
+  .profile-entry.is-current .profile-name { color: var(--orange); }
+  .profile-entry.is-current .profile-axis-label { color: var(--aged); opacity: 1; }
+  .profile-entry.is-current .profile-blurb { color: var(--aged); }
+  .profile-entry.is-current .trait-tag {
+    background: rgba(255,255,255,0.07); color: var(--aged); border-color: rgba(255,255,255,0.15);
+  }
+  .profile-entry.is-current::before { background: var(--orange) !important; }
+
+  .note-box {
+    margin-top: 36px; padding: 18px 22px;
+    background: var(--cream); border: 1.5px solid var(--border); border-left: 4px solid var(--gold);
+  }
+  .note-box p {
+    font-family: 'Lora', serif; font-size: 0.82rem;
+    color: var(--muted); line-height: 1.7; font-style: italic;
+  }
+  .note-box p + p { margin-top: 8px; }
+
+  .footer-link { text-align: center; margin-top: 40px; }
+  .footer-link a {
+    font-family: 'Courier Prime', monospace; font-size: 0.72rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--orange); text-decoration: none;
+    border-bottom: 1px solid var(--orange); padding-bottom: 2px; transition: opacity 0.2s;
+  }
+  .footer-link a:hover { opacity: 0.7; }
+
+  @media (max-width: 600px) {
+    .profile-entry { grid-template-columns: 1fr; }
+    .profile-left { border-right: none; border-bottom: 1.5px solid var(--border); padding: 16px 16px 12px; }
+    .profile-right { padding: 12px 16px 16px; }
+    .header-inner { padding: 24px 16px 20px; }
+    .main { padding: 24px 16px 60px; }
+    .axis-how { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<header class="site-header">
+  <div class="header-stripe"></div>
+  <div class="header-inner">
+    <div class="header-title">
+      <h1>Reader <em>Profiles</em></h1>
+      <p>100 Must-Read Classics · Penguin Books</p>
+    </div>
+    <a href="classics_checklist.html" class="back-link">← Back to Tracker</a>
+  </div>
+</header>
+
+<div class="intro-band">
+  <div class="intro-inner">
+    Your profile is determined by <strong>what you have chosen to read</strong>, not just how many books. The algorithm looks for the strongest signal across four axes — era, difficulty, theme, and breadth — and assigns the profile that best fits your reading. Your current profile is highlighted throughout.
+  </div>
+</div>
+
+<main class="main">
+  <div id="profiles-container"></div>
+
+  <div class="note-box">
+    <p>Profiles are assigned by finding the strongest signal in your reading. Era preference fires first — if 35% or more of your reads fall in one period, that defines you. Difficulty fires next if your average is notably high (2.6+) or low (1.55 or below). Theme clusters fire if 30% or more of your reads share a clear sensibility. Breadth fires last — as Obsessive if one theme still quietly dominates, or Generalist if you have covered five or more distinct themes.</p>
+    <p>Fewer than 5 books read means no signal is strong enough yet, so a baseline profile applies. Check off more books and watch yours shift.</p>
+  </div>
+
+  <div class="footer-link">
+    <a href="classics_checklist.html">← Return to your reading tracker</a>
+  </div>
+</main>
+
+<script>
+const BOOKS = [
+  {id:1,diff:1},{id:2,diff:1},{id:3,diff:1},{id:4,diff:2},{id:5,diff:1},
+  {id:6,diff:2},{id:7,diff:2},{id:8,diff:1},{id:9,diff:1},{id:10,diff:3},
+  {id:11,diff:1},{id:12,diff:1},{id:13,diff:1},{id:14,diff:3},{id:15,diff:3},
+  {id:16,diff:3},{id:17,diff:2},{id:18,diff:2},{id:19,diff:2},{id:20,diff:2},
+  {id:21,diff:3},{id:22,diff:1},{id:23,diff:1},{id:24,diff:1},{id:25,diff:2},
+  {id:26,diff:1},{id:27,diff:1},{id:28,diff:1},{id:29,diff:1},{id:30,diff:3},
+  {id:31,diff:2},{id:32,diff:2},{id:33,diff:2},{id:34,diff:2},{id:35,diff:1},
+  {id:36,diff:3},{id:37,diff:1},{id:38,diff:2},{id:39,diff:2},{id:40,diff:2},
+  {id:41,diff:2},{id:42,diff:2},{id:43,diff:2},{id:44,diff:2},{id:45,diff:2},
+  {id:46,diff:2},{id:47,diff:4},{id:48,diff:2},{id:49,diff:1},{id:50,diff:3},
+  {id:51,diff:3},{id:52,diff:3},{id:53,diff:1},{id:54,diff:1},{id:55,diff:1},
+  {id:56,diff:2},{id:57,diff:1},{id:58,diff:2},{id:59,diff:2},{id:60,diff:2},
+  {id:61,diff:2},{id:62,diff:1},{id:63,diff:1},{id:64,diff:2},{id:65,diff:1},
+  {id:66,diff:2},{id:67,diff:3},{id:68,diff:2},{id:69,diff:1},{id:70,diff:2},
+  {id:71,diff:2},{id:72,diff:2},{id:73,diff:1},{id:74,diff:2},{id:75,diff:3},
+  {id:76,diff:1},{id:77,diff:1},{id:78,diff:1},{id:79,diff:2},{id:80,diff:3},
+  {id:81,diff:1},{id:82,diff:2},{id:83,diff:2},{id:84,diff:3},{id:85,diff:2},
+  {id:86,diff:1},{id:87,diff:1},{id:88,diff:2},{id:89,diff:1},{id:90,diff:2},
+  {id:91,diff:3},{id:92,diff:3},{id:93,diff:2},{id:94,diff:1},{id:95,diff:2},
+  {id:96,diff:1},{id:97,diff:2},{id:98,diff:2},{id:99,diff:1},{id:100,diff:2},
+];
+
+const BOOK_THEMES = {
+  1:"victorian",2:"social_conscience",3:"modernist",4:"epic_traveller",5:"social_conscience",
+  6:"social_conscience",7:"social_conscience",8:"wit",9:"dark_romantic",10:"dark_romantic",
+  11:"dark_romantic",12:"epic_traveller",13:"victorian",14:"epic_traveller",15:"epic_traveller",
+  16:"modernist",17:"dark_romantic",18:"dark_romantic",19:"dark_romantic",20:"victorian",
+  21:"ancient_romantic",22:"social_conscience",23:"social_conscience",24:"modernist",25:"social_conscience",
+  26:"wit",27:"dark_romantic",28:"social_conscience",29:"social_conscience",30:"epic_traveller",
+  31:"victorian",32:"social_conscience",33:"wit",34:"victorian",35:"social_conscience",
+  36:"victorian",37:"dark_romantic",38:"victorian",39:"victorian",40:"victorian",
+  41:"victorian",42:"victorian",43:"victorian",44:"modernist",45:"epic_traveller",
+  46:"social_conscience",47:"modernist",48:"epic_traveller",49:"epic_traveller",50:"dark_romantic",
+  51:"epic_traveller",52:"dark_romantic",53:"wit",54:"wit",55:"wit",
+  56:"epic_traveller",57:"wit",58:"victorian",59:"ancient_romantic",60:"modernist",
+  61:"social_conscience",62:"epic_traveller",63:"ancient_romantic",64:"victorian",65:"epic_traveller",
+  66:"modernist",67:"ancient_romantic",68:"social_conscience",69:"wit",70:"social_conscience",
+  71:"dark_romantic",72:"dark_romantic",73:"wit",74:"modernist",75:"victorian",
+  76:"victorian",77:"dark_romantic",78:"victorian",79:"victorian",80:"modernist",
+  81:"victorian",82:"dark_romantic",83:"victorian",84:"dark_romantic",85:"ancient_romantic",
+  86:"social_conscience",87:"wit",88:"modernist",89:"victorian",90:"victorian",
+  91:"modernist",92:"social_conscience",93:"victorian",94:"social_conscience",95:"social_conscience",
+  96:"epic_traveller",97:"dark_romantic",98:"social_conscience",99:"dark_romantic",100:"victorian",
+};
+
+const PROFILES = [
+  {
+    id:"uninitiated", name:"The Uninitiated", axis:null,
+    desc:"Your classics journey has not started yet — a whole world of literature awaits. Pick up any book from the list and begin.",
+    traits:["Fresh start","Open road","Everything ahead"],
+  },
+  {
+    id:"newcomer", name:"The Curious Newcomer", axis:null,
+    desc:"You have dipped a toe into the vast ocean of classic literature. A handful of books is all it takes to start forming a literary sensibility — a sense of what moves you, what challenges you, what you want more of.",
+    traits:["Early impressions","Building taste","First favourites"],
+  },
+  {
+    id:"victorian", name:"The Victorian", axis:"era",
+    desc:"The 19th century is your natural home. You are drawn to the world Dickens built — gas-lit streets, social injustice, impossible marriages, and characters so vividly rendered they feel like people you once knew. Whether it is Austen's drawing rooms, Hardy's heaths, or Eliot's moral universe, you read to inhabit a world where consequence still matters.",
+    traits:["19th century","Character-driven","Social fabric"],
+  },
+  {
+    id:"modernist", name:"The Modernist", axis:"era",
+    desc:"You are drawn to the literature of rupture — the moment when writers stopped describing the world and started dismantling it. Stream of consciousness, unreliable narrators, fractured time: these are not obstacles to you, they are the point. Woolf, Joyce, Fitzgerald, Nabokov — you seek out writers who made form inseparable from feeling.",
+    traits:["Early 20th century","Experimental form","Interior worlds"],
+  },
+  {
+    id:"ancient_romantic", name:"The Ancients and Romantics", axis:"era",
+    desc:"You read across the deepest stretch of literary time — from Homer's wine-dark sea to the Romantics wrestling with creation and consequence. You are comfortable with myth, allegory, and the kind of storytelling that does not explain itself. These books do not offer easy answers because they were written before anyone agreed on the questions.",
+    traits:["Pre-1800s","Epic tradition","Mythic scale"],
+  },
+  {
+    id:"challenger", name:"The Challenger", axis:"difficulty",
+    desc:"You do not read for comfort — you read for the feeling that a book has cost you something and given you something in return. Dostoevsky, Joyce, Woolf, Kafka: the most demanding books on this list are the ones you reach for first. Your reading is a form of intellectual ambition, and your bookshelves tell the story of a mind that refuses to take the easy path.",
+    traits:["High difficulty","Demanding reads","Intellectual rigour"],
+  },
+  {
+    id:"accessible", name:"The Storyteller's Reader", axis:"difficulty",
+    desc:"You read for story, character, and the pleasure of being carried somewhere entirely other than where you are. The books you love are proof that clarity is not the enemy of depth — Austen, Steinbeck, Tolkien, Atwood all knew that the best ideas travel furthest in the most readable form.",
+    traits:["Accessible reads","Story first","Character above all"],
+  },
+  {
+    id:"dark_romantic", name:"The Dark Romantic", axis:"theme",
+    desc:"Something in you is drawn to the shadow side of literature — the Gothic, the psychological, the obsessive. You read about minds unravelling, houses with secrets, love that destroys. From Bronte to Nabokov to Kafka, the books you choose share a fascination with the dark machinery underneath civilised life. You are not afraid of what fiction can reveal.",
+    traits:["Gothic and Horror","Psychological depth","Shadows and secrets"],
+  },
+  {
+    id:"social_conscience", name:"The Social Conscience", axis:"theme",
+    desc:"Literature is not, for you, an escape from the world — it is a way of seeing the world more clearly. You are drawn to books that take a side: against injustice, against silence, against the comfortable lie. Morrison, Baldwin, Achebe, Atwood, Orwell — your reading list doubles as a moral education, and you would not have it any other way.",
+    traits:["Political and social","Moral urgency","Marginalised voices"],
+  },
+  {
+    id:"wit", name:"The Wit", axis:"theme",
+    desc:"You believe — correctly — that comedy is the hardest thing to write and the most underestimated form of intelligence. Wodehouse at his most absurd, Austen at her sharpest, Waugh at his most savage: these are your touchstones. Wit is not the opposite of depth; it is depth delivered at speed, and the books you love prove it on every page.",
+    traits:["Comedy and satire","Sharp prose","Lightness with bite"],
+  },
+  {
+    id:"epic_traveller", name:"The Epic Traveller", axis:"theme",
+    desc:"You read to travel — not just geographically but across the full scope of human endeavour. War, adventure, generations rising and falling, quests that take years and continents. Hugo, Tolstoy, Tolkien, Dumas, Steinbeck: you want books that feel like they contain whole worlds, because the best ones do.",
+    traits:["Epic scale","Adventure and saga","World-spanning"],
+  },
+  {
+    id:"generalist", name:"The Generalist", axis:"breadth",
+    desc:"You have no fixed allegiances in literature — and that is a rare and valuable thing. Your reading cuts across eras, genres, and styles with genuine curiosity rather than systematic intent. You are the reader most likely to have an unexpected favourite, to make connections across centuries, and to find yourself surprised by what moves you. Range is its own form of wisdom.",
+    traits:["Cross-era","Multi-genre","Eclectic curiosity"],
+  },
+  {
+    id:"obsessive", name:"The Obsessive", axis:"breadth",
+    desc:"When you find something you love, you go deep. Your reading has a gravitational centre — a genre, a sensibility, a way of seeing — and everything else orbits it. This is not a limitation; it is how expertise is built. You likely know your chosen territory better than almost anyone, and you read with the authority of someone who has mapped every corner of it.",
+    traits:["Deep focus","Mastery mindset","Singular taste"],
+  },
+];
+
+const AXIS_META = {
+  "null":      { label:"Baseline",    color:"#7a6e58", how:"applies before 5 books are read" },
+  "era":       { label:"Era",         color:"#8d5524", how:"fires when 35%+ of reads share an era" },
+  "difficulty":{ label:"Difficulty",  color:"#1a5c5a", how:"fires when avg difficulty is notably high or low" },
+  "theme":     { label:"Theme",       color:"#6a1b9a", how:"fires when 30%+ of reads share a sensibility" },
+  "breadth":   { label:"Breadth",     color:"#b8860b", how:"fires when no other signal dominates" },
+};
+
+function getProfile(readBooks) {
+  const n = readBooks.length;
+  if (n === 0) return "uninitiated";
+  if (n < 5)  return "newcomer";
+  const tc = {};
+  readBooks.forEach(b => { const t = BOOK_THEMES[b.id]; if (t) tc[t] = (tc[t]||0)+1; });
+  const topEra = ["victorian","modernist","ancient_romantic"].map(t=>({t,p:(tc[t]||0)/n})).sort((a,b)=>b.p-a.p)[0];
+  if (topEra.p >= 0.35) return topEra.t;
+  const avgDiff = readBooks.reduce((s,b)=>s+b.diff,0)/n;
+  if (avgDiff >= 2.6)  return "challenger";
+  if (avgDiff <= 1.55) return "accessible";
+  const topTheme = ["dark_romantic","social_conscience","wit","epic_traveller"].map(t=>({t,p:(tc[t]||0)/n})).sort((a,b)=>b.p-a.p)[0];
+  if (topTheme.p >= 0.30) return topTheme.t;
+  if (topTheme.p >= 0.40) return "obsessive";
+  if (Object.keys(tc).length >= 5) return "generalist";
+  return topTheme.t || "newcomer";
+}
+
+function render() {
+  const saved = JSON.parse(localStorage.getItem('classics_checked') || '[]');
+  const readBooks = BOOKS.filter(b => saved.includes(b.id));
+  const currentId = getProfile(readBooks);
+
+  const axisOrder = ["null","era","difficulty","theme","breadth"];
+  const groups = {};
+  axisOrder.forEach(a => groups[a] = []);
+  PROFILES.forEach(p => groups[String(p.axis)].push(p));
+
+  let html = '';
+  axisOrder.forEach(axisKey => {
+    const group = groups[axisKey];
+    if (!group.length) return;
+    const meta = AXIS_META[axisKey];
+    html += `<div class="axis-section">
+      <div class="axis-header">
+        <span class="axis-pill" style="background:${meta.color}">${meta.label}</span>
+        <span class="axis-title">${axisKey === 'null' ? 'Baseline' : axisKey.charAt(0).toUpperCase()+axisKey.slice(1)} Profiles</span>
+        <span class="axis-how">How it fires: ${meta.how}</span>
+      </div>`;
+    group.forEach(p => {
+      const cur = p.id === currentId;
+      html += `<div class="profile-entry${cur?' is-current':''}">
+        <div class="profile-left">
+          <div class="profile-axis-label" style="color:${meta.color}">${meta.label}</div>
+          <div class="profile-name">${p.name}</div>
+          <div class="current-badge">Your profile</div>
+        </div>
+        <div class="profile-right">
+          <div class="profile-blurb">${p.desc}</div>
+          <div class="profile-traits">${p.traits.map(t=>`<span class="trait-tag">${t}</span>`).join('')}</div>
+        </div>
+        <style>.axis-section:nth-of-type(${axisOrder.indexOf(axisKey)+1}) .profile-entry:not(.is-current)::before{background:${meta.color}}</style>
+      </div>`;
+    });
+    html += `</div>`;
+  });
+
+  document.getElementById('profiles-container').innerHTML = html;
+}
+
+render();
+</script>
+</body>
+</html>
