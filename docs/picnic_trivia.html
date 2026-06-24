@@ -11,13 +11,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Hanken+Grotesk:wght@400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" />
 
-<!-- =================================================================
-     STEP 1 — paste your Firebase config between the quotes below.
-     (Instructions: console.firebase.google.com → make a project →
-      Build → Realtime Database → Create → "start in test mode".
-      Then Project settings → Your apps → web icon </> → copy the values.)
-     databaseURL is REQUIRED for the realtime database to work.
-================================================================= -->
 <script>
   var firebaseConfig = {
     apiKey:        "AIzaSyDPgh2S_01SuSr3YJ1HCw2GSltPdzi0TuI",
@@ -119,6 +112,8 @@
   .tk .val{color:var(--ink)}
   .tk.win-tk{border-color:var(--gold);background:rgba(231,169,62,.14)}
   .tk.win-tk .val{color:var(--gold-soft)}
+  .tk.wrong-tk{border-color:var(--fig);background:var(--fig-dim)}
+  .tk.wrong-tk .val{color:#e7a3b1}
   .empty{font-size:13px;color:#8c7d86;font-style:italic;margin:11px 0 0}
 
   .answer{margin:12px 0 0;padding:11px 12px;background:rgba(231,169,62,.1);border:1px solid rgba(231,169,62,.35);border-radius:10px;font-size:14px}
@@ -133,6 +128,14 @@
   .board-list{list-style:none;padding:0;margin:12px 0 0;font-size:14px}
   .board-list li{display:flex;justify-content:space-between;padding:5px 4px;border-top:1px solid var(--line)}
   .board-list .p{font-family:var(--mono);color:var(--gold-soft)}
+
+  .lb{background:var(--bg2);border:1px solid var(--line);border-radius:var(--r);padding:16px;margin:28px 0 8px}
+  .lb-head{font-family:var(--serif);font-weight:500;font-size:20px;margin:0 0 12px}
+  .lb-row{display:flex;align-items:center;gap:10px;padding:7px 4px;border-top:1px solid var(--line);font-size:14px}
+  .lb-rank{font-family:var(--mono);font-size:12px;color:var(--mute);min-width:18px}
+  .lb-name{flex:1}
+  .lb-pts{font-family:var(--mono);font-size:13px;color:var(--gold-soft)}
+  .lb-row.me-row .lb-name{color:var(--gold);font-weight:600}
 
   details.host{margin:34px 0 8px;border-top:1px solid var(--line);padding-top:14px}
   details.host>summary{cursor:pointer;color:var(--mute);font-size:13px;list-style:none;text-align:center}
@@ -163,9 +166,9 @@
       </g>
       <line x1="6" y1="30" x2="58" y2="30" stroke="#e7a93e" stroke-width="1.5" stroke-linecap="round"/>
     </svg>
-    <div class="eyebrow">Halo turns 25 · rooftop at golden hour</div>
+    <!-- <div class="eyebrow">Halo turns 25 · rooftop at golden hour</div> -->
     <h1>Guess&nbsp;the&nbsp;Spread</h1>
-    <p class="lede">Wander over whenever, add a guess, come back for more. Answers revealed at dessert.</p>
+    <p class="lede">Bonuses for early correct answers. Penalties for incorrect answers. Reward after dessert.</p>
     <div class="rule"></div>
     <p class="tally" id="tally"></p>
   </header>
@@ -174,28 +177,28 @@
   <div id="champ-slot"></div>
   <div id="gate-slot"></div>
   <div id="board-slot"></div>
+  <div id="leaderboard-slot"></div>
 
   <details class="host" id="host"><summary>Host controls</summary><div id="host-slot"></div></details>
-  <footer>Made for the table. Pour a drink, take a guess.</footer>
+  <!-- <footer>Made for the table. Pour a drink, take a guess.</footer> -->
 </div>
 
 <script>
 /* ---------- questions ---------- */
 var QS = [
-  {id:"q1", sec:"win", n:1, kind:"number", q:"How many months was the cheddar aged?", prize:"the wedge", suffix:"months", src:"host"},
-  {id:"q2", sec:"win", n:2, kind:"number", q:"What's the cacao % of the dark chocolate bar?", prize:"the bar", suffix:"%", src:"host"},
-  {id:"q3", sec:"win", n:3, kind:"number", q:"How many olives are in the jar?", prize:"the jar", suffix:"olives", src:"host"},
-  {id:"q4", sec:"win", n:4, kind:"number", q:"How many years was the balsamic aged?", prize:"the bottle", suffix:"years", src:"host"},
-  {id:"q5", sec:"win", n:5, kind:"text",   q:"The tinned fish — what species, and from what country?", prize:"the sealed tin", src:"host", judged:true},
-  {id:"q6",  sec:"pts", n:6,  kind:"text", q:"What's the only fruit that wears its seeds on the outside?", accept:["strawberry","strawberries"], ans:"Strawberry"},
-  {id:"q7",  sec:"pts", n:7,  kind:"text", q:"Burrata is mozzarella wrapped around curds and what?", accept:["cream","fresh cream"], ans:"Cream"},
-  {id:"q8",  sec:"pts", n:8,  kind:"text", q:"\u201CCharcuterie\u201D comes from French for cooked what?", accept:["flesh","meat","cooked flesh","cooked meat"], ans:"Flesh (cooked flesh / meat)"},
-  {id:"q9",  sec:"pts", n:9,  kind:"text", q:"Roquefort, Stilton and gorgonzola are all what kind of cheese?", accept:["blue","blue cheese","bleu"], ans:"Blue cheese"},
-  {id:"q10", sec:"pts", n:10, kind:"text", q:"True or false: honey never spoils.", accept:["true","t","yes"], ans:"True"},
-  {id:"q11", sec:"pts", n:11, kind:"text", q:"Bone marrow is traditionally roasted in the bone and spread on what?", accept:["toast","bread","toasted bread"], ans:"Toast"},
-  {id:"q12", sec:"pts", n:12, kind:"number", q:"How many different cheeses are on the board tonight?", src:"host"},
-  {id:"q13", sec:"pts", n:13, kind:"text", q:"Which guest traveled the farthest to be here tonight?", src:"host"},
-  {id:"q14", sec:"pts", n:14, kind:"text", q:"How old is Halo today?", accept:["25","twenty-five","twenty five"], ans:"25"}
+  {id:"q1", sec:"pts", n:1, kind:"number", q:"How many months was the cheddar aged?", prize:"the wedge", suffix:"months", src:"host"},
+  {id:"q2", sec:"pts", n:2, kind:"text", q:"What is the capital of Oregon", accept:["salem", "Salem"], ans:"Salem"},
+  {id:"q3", sec:"pts", n:3, kind:"text",   q:"The tinned fish — what species, and from what country?", accept:["salem", "Salem"], ans:"Salem"},
+  {id:"q4", sec:"pts", n:4, kind:"text",   q:"My go to Wordle Starter in all caps: xxOxE", accept:["SMOTE", "smote"], ans:"SMOTE"},
+  {id:"q5", sec:"pts", n:5, kind:"text",   q:"My longest NYT Spelling Bee word in all caps using: TINAHOL", accept:["ANNIHILATION", "annihilation"], ans:"Annihilation"},
+  {id:"q6", sec:"pts", n:6, kind:"number",   q:"How many sardines were in that jar", accept:["25","twenty-five","twenty five"], ans:"25"},
+
+  // {id:"q7",  sec:"pts", n:7,  kind:"text", q:"Burrata is mozzarella wrapped around curds and what?", accept:["cream","fresh cream"], ans:"Cream"},
+  // {id:"q10", sec:"pts", n:10, kind:"text", q:"True or false: honey never spoils.", accept:["true","t","yes"], ans:"True"},
+  // {id:"q11", sec:"pts", n:11, kind:"text", q:"Bone marrow is traditionally roasted in the bone and spread on what?", accept:["toast","bread","toasted bread"], ans:"Toast"},
+  // {id:"q12", sec:"pts", n:12, kind:"number", q:"How many different cheeses are on the board tonight?", src:"host"},
+  // {id:"q13", sec:"pts", n:13, kind:"text", q:"Which guest traveled the farthest to be here tonight?", src:"host"},
+  // {id:"q14", sec:"pts", n:14, kind:"text", q:"How old is Halo today?", accept:["25","twenty-five","twenty five"], ans:"25"}
 ];
 
 /* ---------- state ---------- */
@@ -206,6 +209,7 @@ var configured = firebaseConfig.apiKey.indexOf("PASTE")===-1;
 function norm(s){ return String(s||"").toLowerCase().trim().replace(/[^a-z0-9 ]/g,"").replace(/\s+/g," "); }
 function esc(s){ return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];}); }
 function initials(name){ var p=String(name).trim().split(/\s+/); return p.length===1?p[0].slice(0,2).toUpperCase():(p[0][0]+p[p.length-1][0]).toUpperCase(); }
+function sanitizeKey(s){ return String(s).replace(/[.#$\[\]\/]/g,"_"); }
 function listFor(id){
   var raw=board[id]; if(!raw) return [];
   return Object.keys(raw).map(function(k){ var g=raw[k]; return {id:k,name:g.name,value:g.value,ts:g.ts||0}; })
@@ -225,9 +229,7 @@ function initFirebase(){
 }
 function addGuess(qId, raw){
   var v=String(raw||"").trim(); if(!v||!db) return;
-  var now=Date.now(), dup=false;
-  listFor(qId).forEach(function(g){ if(g.name===me && norm(g.value)===norm(v) && now-g.ts<3000) dup=true; });
-  if(!dup) db.ref("board/"+qId).push({name:me, value:v, ts:now});
+  db.ref("board/"+qId+"/"+sanitizeKey(me)).set({name:me, value:v, ts:Date.now()});
 }
 
 /* ---------- scoring ---------- */
@@ -253,9 +255,19 @@ function winnerNameFor(q){
 }
 function leaderboard(){
   var pts={};
-  QS.filter(function(q){return q.sec==="pts";}).forEach(function(q){
-    if(q.kind==="number"){ var w=closestWinnerId(q); if(w){ listFor(q.id).forEach(function(g){ if(g.id===w) pts[g.name]=(pts[g.name]||0)+1; }); } }
-    else { var seen={}; listFor(q.id).forEach(function(g){ if(isCorrect(q,g.value)&&!seen[g.name]){ seen[g.name]=1; pts[g.name]=(pts[g.name]||0)+1; } }); }
+  QS.forEach(function(q){
+    var gs=listFor(q.id), a=answerFor(q);
+    gs.forEach(function(g){ if(!(g.name in pts)) pts[g.name]=0; });
+    if(q.kind==="number"){
+      var w=closestWinnerId(q);
+      if(w) gs.forEach(function(g){ if(g.id===w) pts[g.name]+=3; });
+    } else {
+      var correctCount=0;
+      gs.forEach(function(g){
+        if(isCorrect(q,g.value)){ pts[g.name]+=(correctCount===0?4:correctCount===1?3:2); correctCount++; }
+        else if(a!=null&&!q.judged) pts[g.name]-=1;
+      });
+    }
   });
   return Object.keys(pts).map(function(k){return {name:k,p:pts[k]};}).sort(function(x,y){return y.p-x.p;});
 }
@@ -265,7 +277,7 @@ function render(){
   var total=0; QS.forEach(function(q){ total+=listFor(q.id).length; });
   document.getElementById("tally").innerHTML=
     '<span class="dot'+(connected?' live':'')+'"></span>'+total+(total===1?" guess":" guesses")+" so far";
-  renderSetup(); renderGate(); renderChamp(); renderBoard(); renderHost();
+  renderSetup(); renderGate(); renderChamp(); renderBoard(); renderLeaderboard(); renderHost();
 }
 function renderSetup(){
   var slot=document.getElementById("setup-slot");
@@ -274,12 +286,15 @@ function renderSetup(){
 }
 function renderGate(){
   var slot=document.getElementById("gate-slot");
-  if(me){ slot.innerHTML='<div class="me-bar">playing as <b>'+esc(me)+'</b> <button id="cn">change</button></div>';
-    var cn=document.getElementById("cn"); if(cn) cn.onclick=function(){ me=""; render(); }; return; }
-  slot.innerHTML='<div class="gate"><h2>What should we call you?</h2><p>First name or initials \u2014 it tags your guesses on the board.</p>'+
-    '<div class="field"><input id="name-in" type="text" placeholder="e.g. Ayana" maxlength="24" autocomplete="off" /><button class="btn" id="name-go">Start</button></div></div>';
+  if(me){ slot.innerHTML='<div class="me-bar">playing as <b>'+esc(me)+'</b></div>'; return; }
+  slot.innerHTML='<div class="gate"><h2>name?</h2>'+
+    '<div class="field"><input id="name-in" type="text" placeholder="e.g. Ayana" maxlength="24" autocomplete="off" /><button class="btn" id="name-go">Start</button></div>'+
+    '<div id="name-err" style="color:#f0c2cc;font-size:13px;margin-top:8px;min-height:18px"></div></div>';
   var input=document.getElementById("name-in"), go=document.getElementById("name-go");
-  function start(){ var v=input.value.trim(); if(v){ me=v; render(); } }
+  function start(){
+    var v=input.value.trim(); if(!v) return;
+    me=v; render();
+  }
   go.onclick=start; input.addEventListener("keydown",function(e){ if(e.key==="Enter") start(); }); input.focus();
 }
 function sectionBlock(sec,title,sub){
@@ -289,11 +304,15 @@ function sectionBlock(sec,title,sub){
 function card(q,i){
   var gs=listFor(q.id), revealed=state.revealed;
   var winId=revealed&&q.kind==="number"?closestWinnerId(q):null;
-  var chip=q.sec==="win"?'<span class="chip win">guess it, win it</span>':'<span class="chip pts">house points</span>';
-  var prize=q.sec==="win"?'<p class="prize">closest guess wins <b>'+esc(q.prize)+'</b></p>':'';
+  var chip='';
+  var ansKnown=revealed&&answerFor(q)!=null&&!q.judged;
   var gHtml = gs.length
-    ? '<div class="guesses">'+gs.map(function(g){ var w=revealed&&(winId?g.id===winId:isCorrect(q,g.value));
-        return '<span class="tk'+(w?' win-tk':'')+'"><span class="who">'+esc(initials(g.name))+'</span><span class="val">'+esc(g.value)+'</span></span>'; }).join("")+'</div>'
+    ? '<div class="guesses">'+gs.map(function(g){
+        var win=revealed&&(winId?g.id===winId:isCorrect(q,g.value));
+        var wrong=ansKnown&&q.kind!=="number"&&!isCorrect(q,g.value);
+        var isMe=g.name===me, showVal=revealed||isMe;
+        return '<span class="tk'+(win?' win-tk':wrong?' wrong-tk':'')+'"><span class="who">'+esc(initials(g.name))+'</span><span class="val">'+(showVal?esc(g.value):'••••')+'</span></span>';
+      }).join("")+'</div>'
     : '<p class="empty">no guesses yet \u2014 be the first</p>';
   var ansHtml="";
   if(revealed){
@@ -301,20 +320,22 @@ function card(q,i){
     var shown=a!=null?esc(a)+(q.suffix?(" "+q.suffix):""):(q.judged?"host decides \u2014 see the table":"\u2014");
     var wn=winnerNameFor(q);
     var winLine=q.judged?'<div class="win-line">winner picked by the host</div>'
-      :(wn?'<div class="win-line">'+(q.sec==="win"?"wins "+esc(q.prize)+": ":"point to ")+'<b>'+esc(wn)+'</b></div>':'<div class="win-line">no one nailed it</div>');
+      :(wn?'<div class="win-line">point to <b>'+esc(wn)+'</b></div>':'<div class="win-line">no one nailed it</div>');
     ansHtml='<div class="answer"><span class="lab">answer</span>'+shown+winLine+'</div>';
   }
-  var inHtml=revealed?"":'<div class="guess-row"><input type="text" '+(q.kind==="number"?'inputmode="numeric" ':'')+
-    'placeholder="'+(q.kind==="number"?"your number":"your guess")+'" maxlength="40" autocomplete="off" data-q="'+q.id+'" />'+
-    '<button class="add" data-add="'+q.id+'">Add</button></div>';
+  var myGuess=gs.filter(function(g){return g.name===me;})[0]||null;
+  var inHtml=revealed?"":myGuess
+    ? '<p class="empty" style="margin:10px 0 0">your answer: <b style="color:var(--ink)">'+esc(myGuess.value)+'</b></p>'
+    : '<div class="guess-row"><input type="text" '+(q.kind==="number"?'inputmode="numeric" ':'')+
+      'placeholder="'+(q.kind==="number"?"your number":"your guess")+'" maxlength="40" autocomplete="off" data-q="'+q.id+'" />'+
+      '<button class="add" data-add="'+q.id+'">Lock in</button></div>';
   return '<div class="q" style="animation-delay:'+(i*55)+'ms"><div class="q-top"><div class="num">'+q.n+'</div>'+
-    '<div class="q-body">'+chip+'<p class="q-text">'+esc(q.q)+'</p>'+prize+inHtml+gHtml+ansHtml+'</div></div></div>';
+    '<div class="q-body">'+chip+'<p class="q-text">'+esc(q.q)+'</p>'+inHtml+gHtml+ansHtml+'</div></div></div>';
 }
 function renderBoard(){
   var slot=document.getElementById("board-slot");
   if(!me){ slot.innerHTML=""; return; }
-  slot.innerHTML=sectionBlock("win","Guess it, win it","closest takes the item home")+
-                 sectionBlock("pts","House points","correct answers tally toward the big prize");
+  slot.innerHTML=sectionBlock("pts","Questions","first correct earns +4 · wrong answers cost −1");
   slot.querySelectorAll("[data-add]").forEach(function(btn){
     var id=btn.getAttribute("data-add"), inp=slot.querySelector('input[data-q="'+id+'"]');
     function go(){ var v=inp.value; inp.value=""; addGuess(id,v); }
@@ -329,6 +350,20 @@ function renderChamp(){
   var rows=lb.slice(0,5).map(function(r){ return '<li><span>'+esc(r.name)+'</span><span class="p">'+r.p+(r.p===1?" pt":" pts")+'</span></li>'; }).join("");
   slot.innerHTML='<div class="champ"><div class="lab">House champion</div><div class="name">'+esc(top.name)+'</div>'+
     '<div class="pts">'+top.p+(top.p===1?" point":" points")+' \u00b7 first slice of the tart</div><ul class="board-list">'+rows+'</ul></div>';
+}
+function renderLeaderboard(){
+  var slot=document.getElementById("leaderboard-slot");
+  if(!me){ slot.innerHTML=""; return; }
+  var lb=leaderboard();
+  if(!lb.length){ slot.innerHTML='<div class="lb"><p class="lb-head">Leaderboard</p><p class="empty">no scores yet</p></div>'; return; }
+  var rows=lb.map(function(r,i){
+    return '<div class="lb-row'+(r.name===me?' me-row':'')+'">'+
+      '<span class="lb-rank">'+(i+1)+'.</span>'+
+      '<span class="lb-name">'+esc(r.name)+'</span>'+
+      '<span class="lb-pts">'+(r.p>0?'+':'')+r.p+' pt'+(Math.abs(r.p)===1?'':'s')+'</span>'+
+    '</div>';
+  }).join("");
+  slot.innerHTML='<div class="lb"><p class="lb-head">Leaderboard</p>'+rows+'</div>';
 }
 var hostUnlocked=false;
 function renderHost(){
